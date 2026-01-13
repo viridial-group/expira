@@ -1,0 +1,341 @@
+import Link from 'next/link'
+import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, Users, ArrowRight } from 'lucide-react'
+
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <Shield className="h-8 w-8 text-primary-600" />
+              <span className="ml-2 text-xl font-bold text-gray-900">VerifyGuard</span>
+            </div>
+            <div className="hidden md:flex items-center space-x-8">
+              <Link href="#features" className="text-gray-600 hover:text-gray-900 transition">Features</Link>
+              <Link href="#pricing" className="text-gray-600 hover:text-gray-900 transition">Pricing</Link>
+              <Link href="/login" className="text-gray-600 hover:text-gray-900 transition">Login</Link>
+              <Link href="/register" className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
+                Get Started
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <div className="inline-flex items-center px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-8">
+              <Zap className="h-4 w-4 mr-2" />
+              Trusted by 10,000+ businesses worldwide
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              Never Miss an Expiration
+              <span className="block text-primary-600 mt-2">Again</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
+              Automatically monitor websites, SSL certificates, domains, and APIs. 
+              Get instant notifications before they expire and keep your online presence secure.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link 
+                href="/register" 
+                className="bg-primary-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-700 transition shadow-lg hover:shadow-xl flex items-center"
+              >
+                Start Free Trial
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link 
+                href="#demo" 
+                className="bg-white text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold border-2 border-gray-300 hover:border-gray-400 transition flex items-center"
+              >
+                Watch Demo
+              </Link>
+            </div>
+            <p className="text-sm text-gray-500 mt-6">No credit card required • 14-day free trial</p>
+          </div>
+
+          {/* Hero Image/Visual */}
+          <div className="mt-20 relative">
+            <div className="bg-gradient-to-r from-primary-500 to-primary-700 rounded-2xl shadow-2xl p-8 md:p-12">
+              <div className="bg-white rounded-lg p-6 shadow-xl">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="font-semibold text-gray-900">All Systems Operational</span>
+                  </div>
+                  <span className="text-sm text-gray-500">Last checked: 2 min ago</span>
+                </div>
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <Globe className="h-5 w-5 text-primary-600" />
+                        <div>
+                          <div className="font-medium text-gray-900">example{i}.com</div>
+                          <div className="text-sm text-gray-500">Expires in 45 days</div>
+                        </div>
+                      </div>
+                      <Check className="h-5 w-5 text-green-500" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Everything You Need to Stay Secure
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Powerful features to monitor and protect your online assets
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Globe,
+                title: 'Website Monitoring',
+                description: 'Track website uptime, expiration dates, and SSL certificate validity in real-time.',
+              },
+              {
+                icon: Lock,
+                title: 'SSL Certificate Tracking',
+                description: 'Get alerts before your SSL certificates expire to prevent security warnings.',
+              },
+              {
+                icon: Bell,
+                title: 'Smart Notifications',
+                description: 'Receive instant alerts via email, SMS, or push notifications when issues are detected.',
+              },
+              {
+                icon: Zap,
+                title: 'Lightning Fast',
+                description: 'Check your products every minute with our high-performance monitoring infrastructure.',
+              },
+              {
+                icon: Shield,
+                title: 'Enterprise Security',
+                description: 'Bank-level encryption and security to keep your data safe and private.',
+              },
+              {
+                icon: TrendingUp,
+                title: 'Analytics Dashboard',
+                description: 'Comprehensive insights and reports on your monitoring history and trends.',
+              },
+            ].map((feature, index) => (
+              <div 
+                key={index}
+                className="p-6 rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg transition group"
+              >
+                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-600 transition">
+                  <feature.icon className="h-6 w-6 text-primary-600 group-hover:text-white transition" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary-600 text-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-5xl font-bold mb-2">10K+</div>
+              <div className="text-primary-100">Active Users</div>
+            </div>
+            <div>
+              <div className="text-5xl font-bold mb-2">50M+</div>
+              <div className="text-primary-100">Checks Per Month</div>
+            </div>
+            <div>
+              <div className="text-5xl font-bold mb-2">99.9%</div>
+              <div className="text-primary-100">Uptime</div>
+            </div>
+            <div>
+              <div className="text-5xl font-bold mb-2">24/7</div>
+              <div className="text-primary-100">Monitoring</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Choose the plan that fits your needs. All plans include a 14-day free trial.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              {
+                name: 'Starter',
+                price: '$9',
+                period: '/month',
+                description: 'Perfect for individuals and small projects',
+                features: [
+                  'Up to 10 products',
+                  'Daily checks',
+                  'Email notifications',
+                  'Basic analytics',
+                  'Email support',
+                ],
+                cta: 'Start Free Trial',
+                popular: false,
+              },
+              {
+                name: 'Professional',
+                price: '$29',
+                period: '/month',
+                description: 'Ideal for growing businesses',
+                features: [
+                  'Up to 100 products',
+                  'Hourly checks',
+                  'Email + SMS notifications',
+                  'Advanced analytics',
+                  'Priority support',
+                  'API access',
+                ],
+                cta: 'Start Free Trial',
+                popular: true,
+              },
+              {
+                name: 'Enterprise',
+                price: '$99',
+                period: '/month',
+                description: 'For large organizations',
+                features: [
+                  'Unlimited products',
+                  'Real-time monitoring',
+                  'All notification types',
+                  'Custom reports',
+                  'Dedicated support',
+                  'Custom integrations',
+                  'SLA guarantee',
+                ],
+                cta: 'Contact Sales',
+                popular: false,
+              },
+            ].map((plan, index) => (
+              <div
+                key={index}
+                className={`bg-white rounded-2xl shadow-lg p-8 ${plan.popular ? 'ring-2 ring-primary-600 scale-105' : ''}`}
+              >
+                {plan.popular && (
+                  <div className="bg-primary-600 text-white text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">
+                    Most Popular
+                  </div>
+                )}
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                <p className="text-gray-600 mb-6">{plan.description}</p>
+                <div className="mb-6">
+                  <span className="text-5xl font-bold text-gray-900">{plan.price}</span>
+                  <span className="text-gray-600">{plan.period}</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start">
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-600">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={plan.cta === 'Contact Sales' ? '/contact' : '/register'}
+                  className={`block w-full text-center py-3 rounded-lg font-semibold transition ${
+                    plan.popular
+                      ? 'bg-primary-600 text-white hover:bg-primary-700'
+                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                  }`}
+                >
+                  {plan.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary-600 to-primary-800 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to Protect Your Online Assets?
+          </h2>
+          <p className="text-xl mb-8 text-primary-100">
+            Join thousands of businesses that trust VerifyGuard to keep their products secure.
+          </p>
+          <Link
+            href="/register"
+            className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition shadow-lg"
+          >
+            Get Started Free
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-400 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center mb-4">
+                <Shield className="h-6 w-6 text-primary-400" />
+                <span className="ml-2 text-white font-bold">VerifyGuard</span>
+              </div>
+              <p className="text-sm">
+                Monitor and protect your online products with confidence.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="#features" className="hover:text-white transition">Features</Link></Link>
+                <li><Link href="#pricing" className="hover:text-white transition">Pricing</Link></Link>
+                <li><Link href="/dashboard" className="hover:text-white transition">Dashboard</Link></Link>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/about" className="hover:text-white transition">About</Link></Link>
+                <li><Link href="/blog" className="hover:text-white transition">Blog</Link></Link>
+                <li><Link href="/contact" className="hover:text-white transition">Contact</Link></Link>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/privacy" className="hover:text-white transition">Privacy</Link></Link>
+                <li><Link href="/terms" className="hover:text-white transition">Terms</Link></Link>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+            <p>&copy; {new Date().getFullYear()} VerifyGuard. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
+

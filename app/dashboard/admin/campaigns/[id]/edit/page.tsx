@@ -44,7 +44,7 @@ export default function EditCampaignPage() {
           content: campaign.content,
           recipientType: campaign.recipientType,
           recipientEmails: Array.isArray(campaign.recipientEmails)
-            ? campaign.recipientEmails.join(', ')
+            ? campaign.recipientEmails.join('; ')
             : '',
           scheduledAt: campaign.scheduledAt
             ? new Date(campaign.scheduledAt).toISOString().slice(0, 16)
@@ -81,13 +81,14 @@ export default function EditCampaignPage() {
       }
 
       if (formData.recipientType === 'custom') {
+        // Support semicolon, comma, and newline separators
         const emails = formData.recipientEmails
-          .split(',')
+          .split(/[;,\n\r]+/)
           .map(email => email.trim())
-          .filter(email => email.length > 0)
+          .filter(email => email.length > 0 && email.includes('@'))
         
         if (emails.length === 0) {
-          toast.error('Please enter at least one email address')
+          toast.error('Please enter at least one valid email address')
           setLoading(false)
           return
         }
@@ -227,18 +228,18 @@ export default function EditCampaignPage() {
               {formData.recipientType === 'custom' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Addresses (comma-separated) *
+                    Email Addresses *
                   </label>
                   <textarea
                     required
                     value={formData.recipientEmails}
                     onChange={(e) => setFormData({ ...formData, recipientEmails: e.target.value })}
-                    placeholder="user1@example.com, user2@example.com, ..."
-                    rows={5}
+                    placeholder="user1@example.com; user2@example.com; user3@example.com"
+                    rows={10}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 font-mono text-sm"
                   />
                   <p className="mt-2 text-sm text-gray-500">
-                    Enter email addresses separated by commas
+                    Enter email addresses separated by semicolons (;) or commas (,). You can also put one email per line.
                   </p>
                 </div>
               )}

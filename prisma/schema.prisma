@@ -172,7 +172,41 @@ model EmailCampaign {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  opens       CampaignOpen[]
+  clicks      CampaignClick[]
+
   @@map("email_campaigns")
+}
+
+model CampaignOpen {
+  id          String        @id @default(cuid())
+  campaignId  String
+  campaign    EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  email       String        // Recipient email
+  openedAt    DateTime      @default(now())
+  ipAddress   String?
+  userAgent   String?
+
+  @@map("campaign_opens")
+  @@index([campaignId])
+  @@index([email])
+  @@index([openedAt])
+}
+
+model CampaignClick {
+  id          String        @id @default(cuid())
+  campaignId  String
+  campaign    EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  email       String        // Recipient email
+  url         String        // Clicked URL
+  clickedAt   DateTime      @default(now())
+  ipAddress   String?
+  userAgent   String?
+
+  @@map("campaign_clicks")
+  @@index([campaignId])
+  @@index([email])
+  @@index([clickedAt])
 }
 
 model Visitor {

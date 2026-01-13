@@ -33,6 +33,12 @@ export async function GET(
             email: true,
           },
         },
+        _count: {
+          select: {
+            opens: true,
+            clicks: true,
+          },
+        },
       },
     })
 
@@ -43,7 +49,56 @@ export async function GET(
       )
     }
 
-    return NextResponse.json({ campaign })
+    // Parse recipientEmails if it's a JSON array
+    let parsedRecipientEmails: string[] | null = null
+    if (campaign.recipientEmails) {
+      try {
+        if (Array.isArray(campaign.recipientEmails)) {
+          parsedRecipientEmails = campaign.recipientEmails as string[]
+        } else if (typeof campaign.recipientEmails === 'string') {
+          const parsed = JSON.parse(campaign.recipientEmails)
+          parsedRecipientEmails = Array.isArray(parsed) ? parsed : null
+        } else {
+          // Handle Prisma Json type
+          const asAny = campaign.recipientEmails as any
+          parsedRecipientEmails = Array.isArray(asAny) ? asAny : null
+        }
+      } catch (error) {
+        console.error('Error parsing recipientEmails:', error)
+        parsedRecipientEmails = null
+      }
+    }
+
+    // Get unique opens and clicks counts
+    const [uniqueOpens, uniqueClicks] = await Promise.all([
+      prisma.campaignOpen.groupBy({
+        by: ['email'],
+        where: { campaignId: params.id },
+      }),
+      prisma.campaignClick.groupBy({
+        by: ['email'],
+        where: { campaignId: params.id },
+      }),
+    ])
+
+    const parsedCampaign = {
+      ...campaign,
+      recipientEmails: parsedRecipientEmails,
+      tracking: {
+        totalOpens: campaign._count.opens,
+        uniqueOpens: uniqueOpens.length,
+        totalClicks: campaign._count.clicks,
+        uniqueClicks: uniqueClicks.length,
+        openRate: campaign.totalRecipients > 0 
+          ? Math.round((uniqueOpens.length / campaign.totalRecipients) * 100) 
+          : 0,
+        clickRate: campaign.totalRecipients > 0
+          ? Math.round((uniqueClicks.length / campaign.totalRecipients) * 100)
+          : 0,
+      },
+    }
+
+    return NextResponse.json({ campaign: parsedCampaign })
   } catch (error) {
     console.error('Error fetching campaign:', error)
     return NextResponse.json(

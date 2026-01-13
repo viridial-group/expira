@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/getUser'
 import { prisma } from '@/lib/db'
 import { sendEmailNotification } from '@/lib/notifications'
+import { injectCampaignTracking } from '@/lib/campaign-tracking'
 
 export async function POST(
   request: NextRequest,
@@ -105,10 +106,17 @@ export async function POST(
       await Promise.allSettled(
         batch.map(async (email) => {
           try {
+            // Inject tracking into email content
+            const trackedContent = injectCampaignTracking(
+              campaign.content,
+              campaign.id,
+              email
+            )
+            
             await sendEmailNotification(
               email,
               campaign.subject,
-              campaign.content
+              trackedContent
             )
             sentCount++
           } catch (error) {

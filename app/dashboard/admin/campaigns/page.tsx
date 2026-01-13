@@ -332,7 +332,14 @@ export default function AdminCampaignsPage() {
                               </Button>
                             </>
                           )}
-                          {campaign.status === 'sent' && (
+                          {(campaign.status === 'sent' || campaign.status === 'scheduled' || campaign.status === 'sending') && (
+                            <Link href={`/dashboard/admin/campaigns/${campaign.id}`}>
+                              <Button variant="outline" size="sm">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                          )}
+                          {campaign.status === 'draft' && (
                             <Link href={`/dashboard/admin/campaigns/${campaign.id}`}>
                               <Button variant="outline" size="sm">
                                 <Eye className="h-4 w-4" />

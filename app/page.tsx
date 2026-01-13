@@ -1,31 +1,36 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, ArrowRight, AlertTriangle, Clock, Heart, Sparkles, Star, Users, Award, CreditCard, Code, X } from 'lucide-react'
+import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, ArrowRight, AlertTriangle, Clock, Heart, Sparkles, Star, Users, Award, CreditCard, Code, X, Menu } from 'lucide-react'
 import StructuredData from './components/StructuredData'
 
-export const metadata = {
-  title: 'expira - Never Miss an Expiration Again | Website & SSL Monitoring',
-  description: 'Automatically monitor websites, SSL certificates, domains, and APIs. Get instant email and SMS notifications before they expire. Trusted by 10,000+ businesses. Start your 14-day free trial today.',
-  keywords: 'website monitoring, SSL certificate monitoring, domain expiration, API monitoring, uptime monitoring, website uptime, domain monitoring, SSL monitoring, expiration tracking, website health check',
-  openGraph: {
-    title: 'expira - Never Miss an Expiration Again',
-    description: 'Automatically monitor websites, SSL certificates, domains, and APIs. Get instant notifications before they expire.',
-    url: 'https://expira.io',
-    siteName: 'expira',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'expira - Monitor & Verify Your Online Products',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-}
+// Metadata is handled in layout.tsx
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        setMobileMenuOpen(false)
+      }
+    }
+  }
+
   return (
     <>
       {/* Structured Data for SEO */}
@@ -34,23 +39,133 @@ export default function Home() {
       <StructuredData type="SoftwareApplication" />
       
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-xl border-b border-gray-200/50 z-50 shadow-sm">
+      {/* Navigation - Enhanced */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200/80 shadow-lg' 
+          : 'bg-white/80 backdrop-blur-md border-b border-gray-200/50 shadow-sm'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center group">
+          <div className="flex justify-between items-center h-16 lg:h-20">
+            <Link href="/" className="flex items-center group relative z-10">
               <div className="relative">
-                <Shield className="h-8 w-8 text-primary-600 group-hover:scale-110 transition-transform" />
-                <div className="absolute inset-0 bg-primary-600/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <Shield className="h-8 w-8 lg:h-9 lg:w-9 text-primary-600 group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-primary-600/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-              <span className="ml-2 text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">expira</span>
+              <span className="ml-2 text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+                expira
+              </span>
             </Link>
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="#problem" className="text-gray-600 hover:text-primary-600 transition font-medium">Problem</Link>
-              <Link href="#features" className="text-gray-600 hover:text-primary-600 transition font-medium">Features</Link>
-              <Link href="#pricing" className="text-gray-600 hover:text-primary-600 transition font-medium">Pricing</Link>
-              <Link href="/login" className="text-gray-600 hover:text-primary-600 transition font-medium">Login</Link>
-              <Link href="/register" className="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-5 py-2.5 rounded-lg hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            
+            {/* Desktop Menu */}
+            <div className="hidden lg:flex items-center space-x-1">
+              <Link 
+                href="#problem" 
+                onClick={(e) => smoothScroll(e, '#problem')}
+                className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
+              >
+                Problem
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
+              </Link>
+              <Link 
+                href="#features" 
+                onClick={(e) => smoothScroll(e, '#features')}
+                className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
+              >
+                Features
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
+              </Link>
+              <Link 
+                href="#pricing" 
+                onClick={(e) => smoothScroll(e, '#pricing')}
+                className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
+              >
+                Pricing
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
+              </Link>
+              <Link 
+                href="/contact" 
+                className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
+              >
+                Contact
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
+              </Link>
+              <Link 
+                href="/login" 
+                className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50"
+              >
+                Login
+              </Link>
+              <Link 
+                href="/register" 
+                className="ml-2 bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-xl hover:shadow-xl hover:shadow-primary-500/50 transition-all duration-300 transform hover:-translate-y-0.5 font-semibold relative overflow-hidden group"
+              >
+                <span className="relative z-10 flex items-center">
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-700 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors relative z-10"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <div className={`lg:hidden absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-xl transition-all duration-300 ease-in-out ${
+            mobileMenuOpen 
+              ? 'max-h-screen opacity-100 visible' 
+              : 'max-h-0 opacity-0 invisible'
+          }`}>
+            <div className="px-4 py-6 space-y-4">
+              <Link 
+                href="#problem" 
+                onClick={(e) => smoothScroll(e, '#problem')}
+                className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
+              >
+                Problem
+              </Link>
+              <Link 
+                href="#features" 
+                onClick={(e) => smoothScroll(e, '#features')}
+                className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
+              >
+                Features
+              </Link>
+              <Link 
+                href="#pricing" 
+                onClick={(e) => smoothScroll(e, '#pricing')}
+                className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
+              >
+                Pricing
+              </Link>
+              <Link 
+                href="/contact" 
+                className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
+              >
+                Contact
+              </Link>
+              <Link 
+                href="/login" 
+                className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
+              >
+                Login
+              </Link>
+              <Link 
+                href="/register" 
+                className="block w-full text-center bg-gradient-to-r from-primary-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all mt-4"
+              >
                 Get Started
               </Link>
             </div>
@@ -58,13 +173,15 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section - Moved to top */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Animated Background Elements */}
+      {/* Hero Section - Enhanced */}
+      <section className="pt-32 lg:pt-40 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Animated Background Elements - Enhanced */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
           <div className="absolute top-40 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
           <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+          {/* Grid Pattern Overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
@@ -87,16 +204,21 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link 
                   href="/register" 
-                  className="group bg-gradient-to-r from-primary-600 to-primary-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-primary-700 hover:to-primary-800 transition-all shadow-xl hover:shadow-2xl flex items-center justify-center transform hover:-translate-y-1"
+                  className="group relative bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold overflow-hidden transition-all shadow-xl hover:shadow-2xl hover:shadow-primary-500/50 flex items-center justify-center transform hover:-translate-y-1"
                 >
-                  Start Free Trial
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  <span className="relative z-10 flex items-center">
+                    Start Free Trial
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary-700 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </Link>
                 <Link 
-                  href="#demo" 
-                  className="bg-white text-gray-900 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-gray-200 hover:border-primary-300 transition-all shadow-lg hover:shadow-xl flex items-center justify-center"
+                  href="#features" 
+                  onClick={(e) => smoothScroll(e, '#features')}
+                  className="group bg-white text-gray-900 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  Watch Demo
+                  <Zap className="mr-2 h-5 w-5 text-primary-600 group-hover:rotate-12 transition-transform" />
+                  Explore Features
                 </Link>
               </div>
               <div className="flex items-center gap-6 text-sm text-gray-600">

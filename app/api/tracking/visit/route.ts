@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { cookies } from 'next/headers'
+import { getLocationFromIP } from '@/lib/geolocation'
 
 // Generate or get session ID
 async function getSessionId(request: NextRequest): Promise<string> {
@@ -30,23 +31,35 @@ export async function POST(request: NextRequest) {
     const sessionId = await getSessionId(request)
     
     // Get client info
-    const ipAddress = request.headers.get('x-forwarded-for') || 
-                     request.headers.get('x-real-ip') || 
-                     'unknown'
+    const ipAddressRaw = request.headers.get('x-forwarded-for') || 
+                         request.headers.get('x-real-ip') || 
+                         'unknown'
+    const ipAddress = ipAddressRaw.split(',')[0].trim() // Get first IP if multiple
     const userAgent = request.headers.get('user-agent') || 'unknown'
     const referrerHeader = referrer || request.headers.get('referer') || null
+
+    // Get geolocation data (don't await to avoid blocking the request)
+    const locationPromise = getLocationFromIP(ipAddress).catch(err => {
+      console.error('Error getting location:', err)
+      return { country: null, city: null }
+    })
 
     // Find or create visitor
     let visitor = await prisma.visitor.findUnique({
       where: { sessionId },
     })
 
+    // Get location data
+    const location = await locationPromise
+
     if (!visitor) {
       visitor = await prisma.visitor.create({
         data: {
           sessionId,
-          ipAddress: ipAddress.split(',')[0].trim(), // Get first IP if multiple
+          ipAddress: ipAddress !== 'unknown' ? ipAddress : null,
           userAgent,
+          country: location.country,
+          city: location.city,
           referrer: referrerHeader,
           firstVisit: new Date(),
           lastVisit: new Date(),
@@ -54,14 +67,24 @@ export async function POST(request: NextRequest) {
         },
       })
     } else {
-      // Update visitor stats
+      // Update visitor stats and location if not already set
+      const updateData: any = {
+        lastVisit: new Date(),
+        visitCount: visitor.visitCount + 1,
+        referrer: referrerHeader || visitor.referrer,
+      }
+
+      // Update location if it's missing or if we got new data
+      if (!visitor.country && location.country) {
+        updateData.country = location.country
+      }
+      if (!visitor.city && location.city) {
+        updateData.city = location.city
+      }
+
       await prisma.visitor.update({
         where: { id: visitor.id },
-        data: {
-          lastVisit: new Date(),
-          visitCount: visitor.visitCount + 1,
-          referrer: referrerHeader || visitor.referrer,
-        },
+        data: updateData,
       })
     }
 

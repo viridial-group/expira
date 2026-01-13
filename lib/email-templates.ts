@@ -413,3 +413,9 @@ export async function sendMarketingEmail(
   await sendEmailNotification(to, subject, html)
 }
 
+// Promotion Email Template - Professional marketing email
+export function getPromotionEmailTemplate(): string {
+  const { getPromotionEmailHTML } = require('./email-promotion-template')
+  return getPromotionEmailHTML()
+}
+

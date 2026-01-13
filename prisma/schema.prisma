@@ -28,6 +28,7 @@ model User {
   notifications    Notification[]
   contactResponses ContactResponse[]
   payments         Payment[]
+  emailCampaigns   EmailCampaign[]
 
   @@map("users")
 }
@@ -152,4 +153,24 @@ model ContactResponse {
   createdAt        DateTime       @default(now())
 
   @@map("contact_responses")
+}
+
+model EmailCampaign {
+  id          String   @id @default(cuid())
+  createdBy   String
+  creator     User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  subject     String
+  content     String   // HTML content
+  recipientType String // "all", "active", "trialing", "canceled", "custom"
+  recipientEmails Json? // Custom email list if recipientType is "custom"
+  status      String   @default("draft") // "draft", "scheduled", "sending", "sent", "failed"
+  sentCount   Int      @default(0)
+  failedCount Int      @default(0)
+  totalRecipients Int  @default(0)
+  scheduledAt DateTime?
+  sentAt      DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("email_campaigns")
 }

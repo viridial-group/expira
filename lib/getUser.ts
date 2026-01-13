@@ -27,6 +27,7 @@ export async function getCurrentUser() {
         email: true,
         name: true,
         image: true,
+        role: true,
       },
     })
 

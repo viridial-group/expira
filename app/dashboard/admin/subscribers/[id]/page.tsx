@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, User, Mail, Phone, Calendar, CreditCard, DollarSign, CheckCircle, XCircle, Clock, AlertCircle, ExternalLink } from 'lucide-react'
@@ -48,13 +48,9 @@ export default function SubscriberDetailPage() {
   const [subscription, setSubscription] = useState<Subscription | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    if (subscriberId) {
-      fetchSubscriber()
-    }
-  }, [subscriberId])
-
-  const fetchSubscriber = async () => {
+  const fetchSubscriber = useCallback(async () => {
+    if (!subscriberId) return
+    
     setLoading(true)
     try {
       const res = await fetch(`/api/admin/subscribers/${subscriberId}`)
@@ -75,7 +71,11 @@ export default function SubscriberDetailPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [subscriberId, router])
+
+  useEffect(() => {
+    fetchSubscriber()
+  }, [fetchSubscriber])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -105,7 +105,7 @@ export default function SubscriberDetailPage() {
       case 'past_due':
         return <Badge variant="warning" size="md">Past Due</Badge>
       default:
-        return <Badge variant="default" size="md">{status}</Badge>
+        return <Badge variant="gray" size="md">{status}</Badge>
     }
   }
 
@@ -120,7 +120,7 @@ export default function SubscriberDetailPage() {
       case 'refunded':
         return <Badge variant="info" size="sm">Refunded</Badge>
       default:
-        return <Badge variant="default" size="sm">{status}</Badge>
+        return <Badge variant="gray" size="sm">{status}</Badge>
     }
   }
 

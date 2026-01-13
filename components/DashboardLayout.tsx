@@ -16,6 +16,7 @@ import {
   CreditCard,
   MessageSquare,
   Users,
+  Mail,
 } from 'lucide-react'
 
 interface DashboardLayoutProps {
@@ -44,6 +45,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     ...(isAdmin ? [
       { name: 'Contact Messages', href: '/dashboard/admin/contact', icon: MessageSquare },
       { name: 'Subscribers', href: '/dashboard/admin/subscribers', icon: Users },
+      { name: 'Email Campaigns', href: '/dashboard/admin/campaigns', icon: Mail },
     ] : []),
   ]
 

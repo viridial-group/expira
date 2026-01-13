@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { CreditCard, Download, Calendar, DollarSign, CheckCircle, XCircle, Clock, AlertCircle, ExternalLink } from 'lucide-react'
 import { Card, Badge, Button } from '@/components/ui'
 import toast from 'react-hot-toast'
@@ -40,18 +40,14 @@ export default function PaymentHistoryPage() {
     totalPages: 0,
   })
 
-  useEffect(() => {
-    fetchPayments()
-  }, [pagination.page])
-
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     setLoading(true)
     try {
       const res = await fetch(`/api/payments/history?page=${pagination.page}&limit=${pagination.limit}`)
       if (res.ok) {
         const data = await res.json()
         setPayments(data.payments || [])
-        setPagination(data.pagination || pagination)
+        setPagination(prev => data.pagination || prev)
       } else {
         toast.error('Failed to load payment history')
       }
@@ -60,7 +56,11 @@ export default function PaymentHistoryPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [pagination.page, pagination.limit])
+
+  useEffect(() => {
+    fetchPayments()
+  }, [fetchPayments])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -105,7 +105,7 @@ export default function PaymentHistoryPage() {
       case 'refunded':
         return <Badge variant="info" size="sm">Refunded</Badge>
       default:
-        return <Badge variant="default" size="sm">{status}</Badge>
+        return <Badge variant="gray" size="sm">{status}</Badge>
     }
   }
 

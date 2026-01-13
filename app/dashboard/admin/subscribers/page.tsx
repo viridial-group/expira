@@ -66,7 +66,7 @@ export default function AdminSubscribersPage() {
       if (res.ok) {
         const data = await res.json()
         setSubscribers(data.subscribers || [])
-        setPagination(data.pagination || pagination)
+        setPagination(prev => data.pagination || prev)
       } else if (res.status === 403) {
         toast.error('Admin access required')
         router.push('/dashboard')
@@ -78,7 +78,7 @@ export default function AdminSubscribersPage() {
     } finally {
       setLoading(false)
     }
-  }, [pagination.page, statusFilter, searchQuery, router])
+  }, [pagination.page, pagination.limit, statusFilter, searchQuery, router])
 
   useEffect(() => {
     fetchSubscribers()
@@ -110,7 +110,7 @@ export default function AdminSubscribersPage() {
       case 'past_due':
         return <Badge variant="warning" size="sm">Past Due</Badge>
       default:
-        return <Badge variant="default" size="sm">{status}</Badge>
+        return <Badge variant="gray" size="sm">{status}</Badge>
     }
   }
 

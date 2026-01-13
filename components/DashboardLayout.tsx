@@ -15,6 +15,7 @@ import {
   FileText,
   CreditCard,
   MessageSquare,
+  Users,
 } from 'lucide-react'
 
 interface DashboardLayoutProps {
@@ -38,8 +39,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Add Product', href: '/dashboard/products/new', icon: Plus },
     { name: 'Notifications', href: '/dashboard/notifications', icon: Bell },
+    { name: 'Payment History', href: '/dashboard/payments', icon: CreditCard },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-    ...(isAdmin ? [{ name: 'Contact Messages', href: '/dashboard/admin/contact', icon: MessageSquare }] : []),
+    ...(isAdmin ? [
+      { name: 'Contact Messages', href: '/dashboard/admin/contact', icon: MessageSquare },
+      { name: 'Subscribers', href: '/dashboard/admin/subscribers', icon: Users },
+    ] : []),
   ]
 
   const isActive = (href: string) => {

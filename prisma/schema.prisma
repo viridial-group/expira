@@ -17,90 +17,113 @@ model User {
   password      String
   emailVerified DateTime?
   image         String?
-  phone         String?   // Phone number for SMS notifications (E.164 format: +1234567890)
+  phone         String? // Phone number for SMS notifications (E.164 format: +1234567890)
   phoneVerified Boolean   @default(false)
   role          String    @default("user") // "user", "admin"
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  
-  products      Product[]
-  subscriptions Subscription[]
-  notifications Notification[]
+
+  products         Product[]
+  subscriptions    Subscription[]
+  notifications    Notification[]
   contactResponses ContactResponse[]
-  
+  payments         Payment[]
+
   @@map("users")
 }
 
 model Product {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   name         String
   url          String
-  type         String   // "website", "domain", "ssl", "api"
+  type         String // "website", "domain", "ssl", "api"
   userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  status       String   @default("active") // "active", "expired", "warning"
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status       String    @default("active") // "active", "expired", "warning"
   expiresAt    DateTime?
-  lastChecked  DateTime @default(now())
-  customFields Json?    // Custom fields to check (e.g., {"expectedText": "Welcome", "statusCode": 200, "responseTime": 1000})
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  
-  checks       Check[]
-  
+  lastChecked  DateTime  @default(now())
+  customFields Json? // Custom fields to check (e.g., {"expectedText": "Welcome", "statusCode": 200, "responseTime": 1000})
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  checks Check[]
+
   @@map("products")
 }
 
 model Check {
-  id            String   @id @default(cuid())
-  productId     String
-  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  status        String   // "success", "error", "warning"
-  message       String?
-  responseTime  Int?     // Response time in milliseconds
-  statusCode    Int?     // HTTP status code
-  errorCode     String?  // Error code (e.g., ENOTFOUND, ECONNREFUSED, CERT_HAS_EXPIRED)
-  errorDetails  Json?    // Additional error details
-  
+  id           String  @id @default(cuid())
+  productId    String
+  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  status       String // "success", "error", "warning"
+  message      String?
+  responseTime Int? // Response time in milliseconds
+  statusCode   Int? // HTTP status code
+  errorCode    String? // Error code (e.g., ENOTFOUND, ECONNREFUSED, CERT_HAS_EXPIRED)
+  errorDetails Json? // Additional error details
+
   // Enhanced data collection fields
-  httpHeaders   Json?    // HTTP response headers
-  dnsInfo       Json?    // DNS lookup information (A, AAAA, CNAME, MX records)
-  sslInfo       Json?    // SSL certificate details (issuer, expiry, subject, etc.)
-  apiResponse   Json?    // API response data (parsed JSON/XML)
-  contentInfo   Json?    // Content verification info (title, meta, text found)
-  performance   Json?    // Performance metrics (dnsTime, connectTime, sslTime, etc.)
-  networkInfo   Json?    // Network information (ipAddress, server, location hints)
-  
-  checkedAt     DateTime @default(now())
-  
+  httpHeaders Json? // HTTP response headers
+  dnsInfo     Json? // DNS lookup information (A, AAAA, CNAME, MX records)
+  sslInfo     Json? // SSL certificate details (issuer, expiry, subject, etc.)
+  apiResponse Json? // API response data (parsed JSON/XML)
+  contentInfo Json? // Content verification info (title, meta, text found)
+  performance Json? // Performance metrics (dnsTime, connectTime, sslTime, etc.)
+  networkInfo Json? // Network information (ipAddress, server, location hints)
+
+  checkedAt DateTime @default(now())
+
   @@map("checks")
 }
 
 model Subscription {
-  id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  stripeCustomerId  String?  @unique
-  stripeSubscriptionId String? @unique
-  status            String   // "active", "canceled", "past_due", "trialing"
-  planId            String
-  currentPeriodEnd  DateTime?
-  cancelAtPeriodEnd Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id                   String    @id @default(cuid())
+  userId               String
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  status               String // "active", "canceled", "past_due", "trialing"
+  planId               String
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  payments Payment[]
+
   @@map("subscriptions")
+}
+
+model Payment {
+  id                    String        @id @default(cuid())
+  userId                String
+  user                  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscriptionId        String?
+  subscription          Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  stripePaymentIntentId String?       @unique
+  stripeInvoiceId       String?       @unique
+  amount                Int // Amount in cents
+  currency              String        @default("usd")
+  status                String // "succeeded", "pending", "failed", "refunded"
+  description           String?
+  planId                String?
+  periodStart           DateTime?
+  periodEnd             DateTime?
+  createdAt             DateTime      @default(now())
+
+  @@map("payments")
 }
 
 model Notification {
   id        String   @id @default(cuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type      String   // "email", "push", "in_app"
+  type      String // "email", "push", "in_app"
   title     String
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
-  
+
   @@map("notifications")
 }
 
@@ -113,21 +136,20 @@ model ContactMessage {
   status    String   @default("new") // "new", "read", "replied", "archived"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   responses ContactResponse[]
-  
+
   @@map("contact_messages")
 }
 
 model ContactResponse {
-  id              String   @id @default(cuid())
+  id               String         @id @default(cuid())
   contactMessageId String
-  contactMessage  ContactMessage @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
-  userId          String
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  message         String
-  createdAt       DateTime @default(now())
-  
+  contactMessage   ContactMessage @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message          String
+  createdAt        DateTime       @default(now())
+
   @@map("contact_responses")
 }
-

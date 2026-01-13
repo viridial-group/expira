@@ -124,6 +124,77 @@ export async function POST(request: NextRequest) {
         break
       }
 
+      case 'invoice.paid': {
+        const invoice = event.data.object as Stripe.Invoice
+        
+        if (invoice.subscription && invoice.payment_intent) {
+          // Get subscription from database
+          const dbSubscription = await prisma.subscription.findUnique({
+            where: {
+              stripeSubscriptionId: invoice.subscription as string,
+            },
+          })
+
+          if (dbSubscription) {
+            // Get payment intent details
+            const paymentIntent = await stripe.paymentIntents.retrieve(
+              invoice.payment_intent as string
+            )
+
+            // Create payment record
+            await prisma.payment.create({
+              data: {
+                userId: dbSubscription.userId,
+                subscriptionId: dbSubscription.id,
+                stripePaymentIntentId: paymentIntent.id,
+                stripeInvoiceId: invoice.id,
+                amount: invoice.amount_paid,
+                currency: invoice.currency || 'usd',
+                status: paymentIntent.status === 'succeeded' ? 'succeeded' : 'pending',
+                description: invoice.description || `Payment for ${dbSubscription.planId} plan`,
+                planId: dbSubscription.planId,
+                periodStart: invoice.period_start ? new Date(invoice.period_start * 1000) : null,
+                periodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
+              },
+            })
+          }
+        }
+
+        break
+      }
+
+      case 'invoice.payment_failed': {
+        const invoice = event.data.object as Stripe.Invoice
+        
+        if (invoice.subscription) {
+          const dbSubscription = await prisma.subscription.findUnique({
+            where: {
+              stripeSubscriptionId: invoice.subscription as string,
+            },
+          })
+
+          if (dbSubscription && invoice.payment_intent) {
+            await prisma.payment.create({
+              data: {
+                userId: dbSubscription.userId,
+                subscriptionId: dbSubscription.id,
+                stripePaymentIntentId: invoice.payment_intent as string,
+                stripeInvoiceId: invoice.id,
+                amount: invoice.amount_due,
+                currency: invoice.currency || 'usd',
+                status: 'failed',
+                description: invoice.description || `Failed payment for ${dbSubscription.planId} plan`,
+                planId: dbSubscription.planId,
+                periodStart: invoice.period_start ? new Date(invoice.period_start * 1000) : null,
+                periodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
+              },
+            })
+          }
+        }
+
+        break
+      }
+
       default:
         console.log(`Unhandled event type: ${event.type}`)
     }

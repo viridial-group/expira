@@ -174,7 +174,7 @@ cd /var/www/expira
 npx prisma generate
 
 # Exécuter les migrations
-npx prisma migrate deploy
+sudo -u postgres psql
 
 # Vérifier que la base de données est connectée
 npx prisma db pull
@@ -198,7 +198,7 @@ npm run build
 sudo cp /var/www/expira/nginx.conf.temp /etc/nginx/sites-available/expira.io
 
 # Créer le lien symbolique
-sudo ln -s /etc/nginx/sites-available/expira.io /etc/nginx/sites-enabled/
+    sudo ln -s /etc/nginx/sites-available/expira.io /etc/nginx/sites-enabled/
 
 # Supprimer la configuration par défaut (optionnel)
 sudo rm /etc/nginx/sites-enabled/default

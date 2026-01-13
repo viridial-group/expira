@@ -3,13 +3,13 @@ module.exports = {
     {
       name: 'expira',
       script: 'npm',
-      args: 'start',
+      args: 'start -p 3002',
       cwd: '/var/www/expira',
-      instances: 2,
-      exec_mode: 'cluster',
+      instances: 1,
+      exec_mode: 'fork',
       env: {
         NODE_ENV: 'production',
-        PORT: 3000,
+        PORT: 3002,
       },
       error_file: '/var/log/pm2/expira-error.log',
       out_file: '/var/log/pm2/expira-out.log',

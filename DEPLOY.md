@@ -2,6 +2,8 @@
 
 Ce guide vous explique comment déployer l'application expira sur votre VPS.
 
+> **📖 Pour un guide de déploiement manuel étape par étape, consultez [MANUAL_DEPLOY.md](./MANUAL_DEPLOY.md)**
+
 ## Prérequis
 
 - Un VPS avec Ubuntu 20.04+ ou Debian 11+

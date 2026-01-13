@@ -17,6 +17,7 @@ import {
   MessageSquare,
   Users,
   Mail,
+  BarChart3,
 } from 'lucide-react'
 
 interface DashboardLayoutProps {
@@ -46,6 +47,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       { name: 'Contact Messages', href: '/dashboard/admin/contact', icon: MessageSquare },
       { name: 'Subscribers', href: '/dashboard/admin/subscribers', icon: Users },
       { name: 'Email Campaigns', href: '/dashboard/admin/campaigns', icon: Mail },
+      { name: 'Analytics', href: '/dashboard/admin/analytics', icon: BarChart3 },
     ] : []),
   ]
 

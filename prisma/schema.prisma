@@ -174,3 +174,35 @@ model EmailCampaign {
 
   @@map("email_campaigns")
 }
+
+model Visitor {
+  id          String   @id @default(cuid())
+  sessionId   String   @unique // Unique session identifier
+  ipAddress   String?
+  userAgent   String?
+  country     String?
+  city        String?
+  referrer    String?  // Where they came from
+  firstVisit  DateTime @default(now())
+  lastVisit   DateTime @default(now())
+  visitCount  Int      @default(1)
+  
+  visits      Visit[]
+  
+  @@map("visitors")
+}
+
+model Visit {
+  id          String   @id @default(cuid())
+  visitorId   String
+  visitor     Visitor  @relation(fields: [visitorId], references: [id], onDelete: Cascade)
+  path        String   // Page path (e.g., "/", "/pricing", "/dashboard")
+  referrer    String?  // HTTP referrer
+  duration    Int?     // Time spent on page in seconds
+  createdAt   DateTime @default(now())
+  
+  @@map("visits")
+  @@index([visitorId])
+  @@index([path])
+  @@index([createdAt])
+}

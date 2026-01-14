@@ -111,6 +111,22 @@ export async function createNotification(
       }
     }
   }
+
+  // Send push notification
+  if (type === 'push' || type === 'in_app') {
+    try {
+      const { sendPushNotification } = await import('./push-notifications')
+      await sendPushNotification(userId, {
+        title,
+        message,
+        url: '/dashboard/notifications',
+        tag: `notification-${Date.now()}`,
+      })
+    } catch (error) {
+      console.error('Error sending push notification:', error)
+      // Don't fail the entire notification if push fails
+    }
+  }
 }
 
 export async function checkProductExpiration() {

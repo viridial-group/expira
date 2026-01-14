@@ -36,6 +36,7 @@ model User {
   referredBy               AffiliateReferral[]  @relation("ReferredUsers")
   affiliateReferrals       AffiliateReferral[]  @relation("AffiliateUser")
   affiliateCommissions     AffiliateCommission[]
+  pushSubscriptions        PushSubscription[]
 
   @@map("users")
 }
@@ -331,4 +332,21 @@ model NewsletterSubscriber {
   @@index([email])
   @@index([status])
   @@index([subscribedAt])
+}
+
+model PushSubscription {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint    String   @unique // Push service endpoint URL
+  p256dh      String   // User public key
+  auth        String   // User auth secret
+  userAgent   String?  // Browser user agent
+  enabled     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("push_subscriptions")
+  @@index([userId])
+  @@index([enabled])
 }

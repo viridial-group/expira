@@ -3,12 +3,15 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useI18n } from '@/lib/i18n-client'
 import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, ArrowRight, AlertTriangle, Clock, Heart, Sparkles, Star, Users, Award, CreditCard, Code, X, Menu, Gift, Mail, MessageSquare } from 'lucide-react'
 import StructuredData from './components/StructuredData'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 // Metadata is handled in layout.tsx
 
 export default function Home() {
+  const { t } = useI18n()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [newsletterEmail, setNewsletterEmail] = useState('')
@@ -105,7 +108,7 @@ export default function Home() {
                 onClick={(e) => smoothScroll(e, '#problem')}
                 className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
               >
-                Problem
+                {t('common.problem', { defaultValue: 'Problem' })}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
               </Link>
               <Link 
@@ -113,7 +116,7 @@ export default function Home() {
                 onClick={(e) => smoothScroll(e, '#features')}
                 className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
               >
-                Features
+                {t('common.features')}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
               </Link>
               <Link 
@@ -121,14 +124,14 @@ export default function Home() {
                 onClick={(e) => smoothScroll(e, '#pricing')}
                 className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
               >
-                Pricing
+                {t('common.pricing')}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
               </Link>
               <Link 
                 href="/contact" 
                 className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
               >
-                Contact
+                {t('common.contact')}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
               </Link>
               <Link 
@@ -136,21 +139,22 @@ export default function Home() {
                 className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50 relative group"
               >
                 <Gift className="h-4 w-4 inline mr-1" />
-                Affiliate
+                {t('common.affiliate', { defaultValue: 'Affiliate' })}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
               </Link>
+              <LanguageSwitcher />
               <Link 
                 href="/login" 
                 className="px-4 py-2 text-gray-700 hover:text-primary-600 transition-all duration-200 font-medium rounded-lg hover:bg-primary-50"
               >
-                Login
+                {t('common.login')}
               </Link>
               <Link 
                 href="/register" 
                 className="ml-2 bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-xl hover:shadow-xl hover:shadow-primary-500/50 transition-all duration-300 transform hover:-translate-y-0.5 font-semibold relative overflow-hidden group"
               >
                 <span className="relative z-10 flex items-center">
-                  Get Started
+                  {t('common.getStarted')}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-700 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -183,46 +187,49 @@ export default function Home() {
                 onClick={(e) => smoothScroll(e, '#problem')}
                 className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
               >
-                Problem
+                {t('common.problem', { defaultValue: 'Problem' })}
               </Link>
               <Link 
                 href="#features" 
                 onClick={(e) => smoothScroll(e, '#features')}
                 className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
               >
-                Features
+                {t('common.features')}
               </Link>
               <Link 
                 href="#pricing" 
                 onClick={(e) => smoothScroll(e, '#pricing')}
                 className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
               >
-                Pricing
+                {t('common.pricing')}
               </Link>
               <Link 
                 href="/contact" 
                 className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
               >
-                Contact
+                {t('common.contact')}
               </Link>
               <Link 
                 href="/affiliate" 
                 className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
               >
                 <Gift className="h-4 w-4 inline mr-2" />
-                Affiliate Program
+                {t('common.affiliate', { defaultValue: 'Affiliate Program' })}
               </Link>
+              <div className="px-4 py-3">
+                <LanguageSwitcher />
+              </div>
               <Link 
                 href="/login" 
                 className="block px-4 py-3 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all font-medium"
               >
-                Login
+                {t('common.login')}
               </Link>
               <Link 
                 href="/register" 
                 className="block w-full text-center bg-gradient-to-r from-primary-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all mt-4"
               >
-                Get Started
+                {t('common.getStarted')}
               </Link>
             </div>
           </div>
@@ -248,14 +255,13 @@ export default function Home() {
                 Trusted by 10,000+ businesses worldwide
               </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
-                Never Miss an
+                {t('hero.title')}
                 <span className="block bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mt-2">
-                  Expiration Again
+                  {t('hero.titleHighlight')}
                 </span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl leading-relaxed">
-                Automatically monitor websites, SSL certificates, domains, and APIs. 
-                Get instant notifications before they expire and keep your online presence secure.
+                {t('hero.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link 
@@ -263,7 +269,7 @@ export default function Home() {
                   className="group relative bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold overflow-hidden transition-all shadow-xl hover:shadow-2xl hover:shadow-primary-500/50 flex items-center justify-center transform hover:-translate-y-1"
                 >
                   <span className="relative z-10 flex items-center">
-                    Start Free Trial
+                    {t('hero.startTrial')}
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-primary-700 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -274,17 +280,17 @@ export default function Home() {
                   className="group bg-white text-gray-900 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
                   <Zap className="mr-2 h-5 w-5 text-primary-600 group-hover:rotate-12 transition-transform" />
-                  Explore Features
+                  {t('hero.exploreFeatures')}
                 </Link>
               </div>
               <div className="flex items-center gap-6 text-sm text-gray-600">
                 <div className="flex items-center">
                   <Check className="h-5 w-5 text-green-500 mr-2" />
-                  No credit card required
+                  {t('hero.noCreditCard')}
                 </div>
                 <div className="flex items-center">
                   <Check className="h-5 w-5 text-green-500 mr-2" />
-                  14-day free trial
+                  {t('hero.freeTrial')}
                 </div>
               </div>
             </div>
@@ -347,31 +353,31 @@ export default function Home() {
       <section id="problem" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-100/50">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-            The Hidden Costs of Missed Expirations
+            {t('problem.title')}
           </h2>
           <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-12">
-            Expired domains, SSL certificates, and unnoticed API downtimes can lead to severe consequences for your business.
+            {t('problem.subtitle')}
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform transition-all hover:scale-105 hover:shadow-xl">
               <AlertTriangle className="h-12 w-12 text-danger-500 mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Security Vulnerabilities</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">{t('problem.security.title')}</h3>
               <p className="text-gray-600">
-                Expired SSL certificates expose your website to security risks, eroding customer trust and leading to data breaches.
+                {t('problem.security.description')}
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform transition-all hover:scale-105 hover:shadow-xl">
               <Users className="h-12 w-12 text-warning-500 mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Loss of Customer Trust</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">{t('problem.trust.title')}</h3>
               <p className="text-gray-600">
-                Website downtime or security warnings drive customers away, damaging your brand reputation and loyalty.
+                {t('problem.trust.description')}
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform transition-all hover:scale-105 hover:shadow-xl">
               <CreditCard className="h-12 w-12 text-primary-500 mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Financial Losses</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">{t('problem.financial.title')}</h3>
               <p className="text-gray-600">
-                Missed renewals can result in costly recovery fees, lost sales, and significant revenue impact.
+                {t('problem.financial.description')}
               </p>
             </div>
           </div>
@@ -383,10 +389,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-              Your All-in-One Monitoring Solution
+              {t('features.title')}
             </h2>
             <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-              expira provides comprehensive monitoring to ensure your online assets are always secure and operational.
+              {t('features.subtitle')}
             </p>
           </div>
 
@@ -396,9 +402,9 @@ export default function Home() {
                 <Globe className="h-7 w-7 text-primary-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Website & Domain Monitoring</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('features.website.title')}</h3>
                 <p className="text-gray-600">
-                  Track your website uptime and domain expiration dates. Get alerts before they go offline or expire.
+                  {t('features.website.description')}
                 </p>
               </div>
             </div>
@@ -407,9 +413,9 @@ export default function Home() {
                 <Lock className="h-7 w-7 text-green-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">SSL Certificate Tracking</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('features.ssl.title')}</h3>
                 <p className="text-gray-600">
-                  Never let an SSL certificate expire unnoticed. We&apos;ll notify you well in advance.
+                  {t('features.ssl.description')}
                 </p>
               </div>
             </div>
@@ -418,9 +424,9 @@ export default function Home() {
                 <Code className="h-7 w-7 text-yellow-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">API Endpoint Monitoring</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('features.api.title')}</h3>
                 <p className="text-gray-600">
-                  Ensure your critical APIs are always responsive and returning the correct data.
+                  {t('features.api.description')}
                 </p>
               </div>
             </div>
@@ -429,9 +435,9 @@ export default function Home() {
                 <Bell className="h-7 w-7 text-purple-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Instant Notifications</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('features.notifications.title')}</h3>
                 <p className="text-gray-600">
-                  Receive alerts via email, SMS, or in-app notifications for any critical changes.
+                  {t('features.notifications.description')}
                 </p>
               </div>
             </div>
@@ -440,9 +446,9 @@ export default function Home() {
                 <Clock className="h-7 w-7 text-red-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Customizable Check Intervals</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('features.intervals.title')}</h3>
                 <p className="text-gray-600">
-                  Set how often your products are monitored, from daily to real-time checks.
+                  {t('features.intervals.description')}
                 </p>
               </div>
             </div>
@@ -451,9 +457,9 @@ export default function Home() {
                 <TrendingUp className="h-7 w-7 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Detailed Analytics & Reports</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('features.analytics.title')}</h3>
                 <p className="text-gray-600">
-                  Access comprehensive reports and analytics to understand your product&apos;s performance.
+                  {t('features.analytics.description')}
                 </p>
               </div>
             </div>
@@ -465,13 +471,13 @@ export default function Home() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-50 to-blue-50">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-12 leading-tight">
-            What Our Customers Say
+            {t('testimonials.title')}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center transform transition-all hover:scale-105 hover:shadow-xl">
               <Image src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client 1" width={80} height={80} className="w-20 h-20 rounded-full mb-6 border-4 border-primary-100" />
               <p className="text-lg text-gray-700 italic mb-4">
-                &quot;expira has saved us countless hours and potential disasters. The notifications are spot on!&quot;
+                &quot;{t('testimonials.testimonial1.text')}&quot;
               </p>
               <div className="flex items-center text-yellow-500 mb-2">
                 <Star className="h-5 w-5 fill-current" />
@@ -480,13 +486,13 @@ export default function Home() {
                 <Star className="h-5 w-5 fill-current" />
                 <Star className="h-5 w-5 fill-current" />
               </div>
-              <p className="font-semibold text-gray-900">John Smith</p>
-              <p className="text-sm text-gray-600">CEO, Tech Solutions</p>
+              <p className="font-semibold text-gray-900">{t('testimonials.testimonial1.author')}</p>
+              <p className="text-sm text-gray-600">{t('testimonials.testimonial1.role')}</p>
             </div>
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center transform transition-all hover:scale-105 hover:shadow-xl">
               <Image src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client 2" width={80} height={80} className="w-20 h-20 rounded-full mb-6 border-4 border-primary-100" />
               <p className="text-lg text-gray-700 italic mb-4">
-                &quot;Reliable and easy to use. expira is an essential tool for our online presence.&quot;
+                &quot;{t('testimonials.testimonial2.text')}&quot;
               </p>
               <div className="flex items-center text-yellow-500 mb-2">
                 <Star className="h-5 w-5 fill-current" />
@@ -495,13 +501,13 @@ export default function Home() {
                 <Star className="h-5 w-5 fill-current" />
                 <Star className="h-5 w-5" />
               </div>
-              <p className="font-semibold text-gray-900">Jane Doe</p>
-              <p className="text-sm text-gray-600">Marketing Director, Global Corp</p>
+              <p className="font-semibold text-gray-900">{t('testimonials.testimonial2.author')}</p>
+              <p className="text-sm text-gray-600">{t('testimonials.testimonial2.role')}</p>
             </div>
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center transform transition-all hover:scale-105 hover:shadow-xl">
               <Image src="https://randomuser.me/api/portraits/men/47.jpg" alt="Client 3" width={80} height={80} className="w-20 h-20 rounded-full mb-6 border-4 border-primary-100" />
               <p className="text-lg text-gray-700 italic mb-4">
-                &quot;The best monitoring service we&apos;ve used. Highly recommend expira to any business.&quot;
+                &quot;{t('testimonials.testimonial3.text')}&quot;
               </p>
               <div className="flex items-center text-yellow-500 mb-2">
                 <Star className="h-5 w-5 fill-current" />
@@ -510,8 +516,8 @@ export default function Home() {
                 <Star className="h-5 w-5 fill-current" />
                 <Star className="h-5 w-5 fill-current" />
               </div>
-              <p className="font-semibold text-gray-900">Peter Jones</p>
-              <p className="text-sm text-gray-600">CTO, Innovate Ltd</p>
+              <p className="font-semibold text-gray-900">{t('testimonials.testimonial3.author')}</p>
+              <p className="text-sm text-gray-600">{t('testimonials.testimonial3.role')}</p>
             </div>
           </div>
         </div>
@@ -523,13 +529,13 @@ export default function Home() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-2 bg-gradient-to-r from-primary-100 to-blue-100 text-primary-700 rounded-full text-sm font-semibold mb-6 shadow-sm">
               <Sparkles className="h-4 w-4 mr-2" />
-              14-day free trial • No credit card required
+              {t('pricing.trialBadge')}
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-              Simple, Transparent Pricing
+              {t('pricing.title')}
             </h2>
             <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-              Choose the plan that fits your needs. All plans include a 14-day free trial with no credit card required.
+              {t('pricing.subtitle')}
             </p>
           </div>
 
@@ -537,60 +543,34 @@ export default function Home() {
             {/* Starter Plan */}
             <div className="bg-white rounded-2xl shadow-xl border-0 p-8 relative transform transition-all hover:scale-105 hover:shadow-2xl">
               <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
-                <p className="text-gray-600">Perfect for individuals and small projects</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('pricing.starter.name')}</h3>
+                <p className="text-gray-600">{t('pricing.starter.description')}</p>
               </div>
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className="text-5xl font-extrabold text-gray-900">$9</span>
-                  <span className="text-gray-600 ml-2">/month</span>
+                  <span className="text-5xl font-extrabold text-gray-900">{t('pricing.starter.price')}</span>
+                  <span className="text-gray-600 ml-2">{t('pricing.starter.period')}</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Up to 10 products</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Daily checks</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Email notifications</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Basic analytics</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Email support</span>
-                </li>
+                {(() => {
+                  const features = t('pricing.starter.features', { defaultValue: [] })
+                  const featuresArray = Array.isArray(features) ? features : []
+                  return featuresArray.map((feature: string, i: number) => (
+                    <li key={i} className="flex items-start">
+                      <div className="flex-shrink-0 mt-0.5">
+                        <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                          <Check className="h-3 w-3 text-white" />
+                        </div>
+                      </div>
+                      <span className="ml-3 text-gray-700">{feature}</span>
+                    </li>
+                  ))
+                })()}
               </ul>
               <Link href="/pricing/review?plan=starter">
                 <button className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all shadow-lg">
-                  Start Free Trial
+                  {t('pricing.starter.cta')}
                   <ArrowRight className="inline-block ml-2 h-4 w-4" />
                 </button>
               </Link>
@@ -600,90 +580,61 @@ export default function Home() {
             <div className="bg-white rounded-2xl shadow-xl border-0 p-8 relative transform transition-all hover:scale-105 hover:shadow-2xl ring-2 ring-primary-500 scale-105 lg:scale-110">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <div className="bg-gradient-to-r from-primary-600 to-blue-600 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-lg">
-                  Most Popular
+                  {t('pricing.professional.badge')}
                 </div>
               </div>
               <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
-                <p className="text-gray-600">Ideal for growing businesses</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('pricing.professional.name')}</h3>
+                <p className="text-gray-600">{t('pricing.professional.description')}</p>
               </div>
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className="text-5xl font-extrabold text-gray-900">$29</span>
-                  <span className="text-gray-600 ml-2">/month</span>
+                  <span className="text-5xl font-extrabold text-gray-900">{t('pricing.professional.price')}</span>
+                  <span className="text-gray-600 ml-2">{t('pricing.professional.period')}</span>
                 </div>
                 <p className="text-sm text-gray-500 mt-2 flex items-center">
                   <TrendingUp className="h-4 w-4 mr-1 text-green-600" />
-                  Best value for growing teams
+                  {t('pricing.professional.bestValue')}
                 </p>
               </div>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Up to 100 products</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Hourly checks</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-blue-600">
-                      <MessageSquare className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-primary-700 font-semibold">Email + SMS notifications</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-blue-600">
-                      <MessageSquare className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-primary-700 font-semibold">Up to 500 SMS/month</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Advanced analytics</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Priority support</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">API access</span>
-                </li>
+                {(() => {
+                  const features = t('pricing.professional.features', { defaultValue: [] })
+                  const featuresArray = Array.isArray(features) ? features : []
+                  return featuresArray.map((feature: string, i: number) => {
+                    const isSMS = feature.toLowerCase().includes('sms') || feature.toLowerCase().includes('notifications')
+                    return (
+                      <li key={i} className="flex items-start">
+                        <div className="flex-shrink-0 mt-0.5">
+                          <div className={`h-5 w-5 rounded-full flex items-center justify-center ${
+                            isSMS 
+                              ? 'bg-gradient-to-br from-primary-500 to-blue-600' 
+                              : 'bg-gradient-to-br from-success-500 to-emerald-600'
+                          }`}>
+                            {isSMS ? (
+                              <MessageSquare className="h-3 w-3 text-white" />
+                            ) : (
+                              <Check className="h-3 w-3 text-white" />
+                            )}
+                          </div>
+                        </div>
+                        <span className={`ml-3 ${isSMS ? 'text-primary-700 font-semibold' : 'text-gray-700'}`}>
+                          {feature}
+                        </span>
+                      </li>
+                    )
+                  })
+                })()}
               </ul>
               <div className="mb-6 p-4 bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-200 rounded-lg">
                 <div className="flex items-center gap-2">
                   <MessageSquare className="h-5 w-5 text-primary-600" />
-                  <p className="text-sm text-primary-700 font-medium">500 SMS included per month</p>
+                  <p className="text-sm text-primary-700 font-medium">{t('pricing.professional.smsInfo')}</p>
                 </div>
               </div>
               <Link href="/pricing/review?plan=professional">
                 <button className="w-full bg-gradient-to-r from-primary-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-primary-700 hover:to-blue-700 transition-all shadow-lg">
-                  Start Free Trial
+                  {t('pricing.professional.cta')}
                   <ArrowRight className="inline-block ml-2 h-4 w-4" />
                 </button>
               </Link>
@@ -692,90 +643,53 @@ export default function Home() {
             {/* Enterprise Plan */}
             <div className="bg-white rounded-2xl shadow-xl border-0 p-8 relative transform transition-all hover:scale-105 hover:shadow-2xl">
               <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
-                <p className="text-gray-600">For large organizations</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('pricing.enterprise.name')}</h3>
+                <p className="text-gray-600">{t('pricing.enterprise.description')}</p>
               </div>
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className="text-5xl font-extrabold text-gray-900">$99</span>
-                  <span className="text-gray-600 ml-2">/month</span>
+                  <span className="text-5xl font-extrabold text-gray-900">{t('pricing.enterprise.price')}</span>
+                  <span className="text-gray-600 ml-2">{t('pricing.enterprise.period')}</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Unlimited products</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Real-time monitoring</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">All notification types</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-blue-600">
-                      <MessageSquare className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-primary-700 font-semibold">Unlimited SMS</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Custom reports</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Dedicated support</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">Custom integrations</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  </div>
-                  <span className="ml-3 text-gray-700">SLA guarantee</span>
-                </li>
+                {(() => {
+                  const features = t('pricing.enterprise.features', { defaultValue: [] })
+                  const featuresArray = Array.isArray(features) ? features : []
+                  return featuresArray.map((feature: string, i: number) => {
+                    const isSMS = feature.toLowerCase().includes('sms')
+                    return (
+                      <li key={i} className="flex items-start">
+                        <div className="flex-shrink-0 mt-0.5">
+                          <div className={`h-5 w-5 rounded-full flex items-center justify-center ${
+                            isSMS 
+                              ? 'bg-gradient-to-br from-primary-500 to-blue-600' 
+                              : 'bg-gradient-to-br from-success-500 to-emerald-600'
+                          }`}>
+                            {isSMS ? (
+                              <MessageSquare className="h-3 w-3 text-white" />
+                            ) : (
+                              <Check className="h-3 w-3 text-white" />
+                            )}
+                          </div>
+                        </div>
+                        <span className={`ml-3 ${isSMS ? 'text-primary-700 font-semibold' : 'text-gray-700'}`}>
+                          {feature}
+                        </span>
+                      </li>
+                    )
+                  })
+                })()}
               </ul>
               <div className="mb-6 p-4 bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-200 rounded-lg">
                 <div className="flex items-center gap-2">
                   <MessageSquare className="h-5 w-5 text-primary-600" />
-                  <p className="text-sm text-primary-700 font-medium">Unlimited SMS included</p>
+                  <p className="text-sm text-primary-700 font-medium">{t('pricing.enterprise.smsInfo')}</p>
                 </div>
               </div>
               <Link href="/contact">
                 <button className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all shadow-lg">
-                  Contact Sales
+                  {t('pricing.enterprise.cta')}
                   <ArrowRight className="inline-block ml-2 h-4 w-4" />
                 </button>
               </Link>
@@ -788,16 +702,16 @@ export default function Home() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary-600 to-blue-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-            Ready to Protect Your Online Assets?
+            {t('cta.title')}
           </h2>
           <p className="text-xl md:text-2xl mb-10 text-white/90 leading-relaxed">
-            Join thousands of businesses that trust expira to keep their products secure.
+            {t('cta.subtitle')}
           </p>
           <Link
             href="/register"
             className="inline-flex items-center px-10 py-4 bg-white text-primary-600 rounded-xl text-lg font-semibold hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
-            Start Your Free Trial
+            {t('cta.button')}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </div>

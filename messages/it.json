@@ -1,0 +1,145 @@
+{
+  "common": {
+    "home": "Home",
+    "features": "Funzionalità",
+    "pricing": "Prezzi",
+    "contact": "Contatto",
+    "login": "Accedi",
+    "register": "Registrati",
+    "getStarted": "Inizia",
+    "language": "Lingua"
+  },
+  "hero": {
+    "title": "Non Perdere Mai",
+    "titleHighlight": "Una Scadenza",
+    "subtitle": "Monitora automaticamente siti web, certificati SSL, domini e API. Ricevi notifiche istantanee prima che scadano e mantieni la tua presenza online sicura.",
+    "startTrial": "Inizia prova gratuita",
+    "exploreFeatures": "Esplora funzionalità",
+    "noCreditCard": "Nessuna carta di credito richiesta",
+    "freeTrial": "Prova gratuita di 14 giorni"
+  },
+  "problem": {
+    "title": "I Costi Nascosti delle Scadenze Mancate",
+    "subtitle": "Domini scaduti, certificati SSL e interruzioni API non rilevate possono portare a gravi conseguenze per la tua azienda.",
+    "security": {
+      "title": "Vulnerabilità di Sicurezza",
+      "description": "I certificati SSL scaduti espongono il tuo sito web a rischi di sicurezza, erodendo la fiducia dei clienti e portando a violazioni dei dati."
+    },
+    "trust": {
+      "title": "Perdita di Fiducia dei Clienti",
+      "description": "I tempi di inattività del sito web o gli avvisi di sicurezza allontanano i clienti, danneggiando la reputazione e la fedeltà del tuo brand."
+    },
+    "financial": {
+      "title": "Perdite Finanziarie",
+      "description": "I rinnovi mancati possono comportare costosi costi di recupero, vendite perse e un impatto significativo sui ricavi."
+    }
+  },
+  "features": {
+    "title": "La Tua Soluzione di Monitoraggio Tutto-in-Uno",
+    "subtitle": "expira offre un monitoraggio completo per garantire che le tue risorse online siano sempre sicure e operative.",
+    "website": {
+      "title": "Monitoraggio di Siti Web e Domini",
+      "description": "Traccia il tempo di attività del tuo sito web e le date di scadenza dei domini. Ricevi avvisi prima che vadano offline o scadano."
+    },
+    "ssl": {
+      "title": "Tracciamento Certificati SSL",
+      "description": "Non lasciare mai che un certificato SSL scada inosservato. Ti avviseremo con largo anticipo."
+    },
+    "api": {
+      "title": "Monitoraggio Endpoint API",
+      "description": "Assicurati che le tue API critiche siano sempre reattive e restituiscano i dati corretti."
+    },
+    "notifications": {
+      "title": "Notifiche Istantanee",
+      "description": "Ricevi avvisi via email, SMS o notifiche nell'app per qualsiasi modifica critica."
+    },
+    "intervals": {
+      "title": "Intervalli di Controllo Personalizzabili",
+      "description": "Imposta la frequenza con cui i tuoi prodotti vengono monitorati, dai controlli giornalieri ai controlli in tempo reale."
+    },
+    "analytics": {
+      "title": "Analisi e Report Dettagliati",
+      "description": "Accedi a report e analisi completi per comprendere le prestazioni del tuo prodotto."
+    }
+  },
+  "testimonials": {
+    "title": "Cosa Dicono i Nostri Clienti",
+    "testimonial1": {
+      "text": "expira ci ha fatto risparmiare innumerevoli ore e potenziali disastri. Le notifiche sono perfette!",
+      "author": "John Smith",
+      "role": "CEO, Tech Solutions"
+    },
+    "testimonial2": {
+      "text": "Affidabile e facile da usare. expira è uno strumento essenziale per la nostra presenza online.",
+      "author": "Jane Doe",
+      "role": "Direttore Marketing, Global Corp"
+    },
+    "testimonial3": {
+      "text": "Il miglior servizio di monitoraggio che abbiamo usato. Consiglio vivamente expira a qualsiasi azienda.",
+      "author": "Peter Jones",
+      "role": "CTO, Innovate Ltd"
+    }
+  },
+  "cta": {
+    "title": "Pronto a Proteggere le Tue Risorse Online?",
+    "subtitle": "Unisciti a migliaia di aziende che si fidano di expira per mantenere i loro prodotti sicuri.",
+    "button": "Inizia la Tua Prova Gratuita"
+  },
+  "pricing": {
+    "title": "Prezzi Semplici e Trasparenti",
+    "subtitle": "Scegli il piano che si adatta alle tue esigenze. Tutti i piani includono una prova gratuita di 14 giorni senza carta di credito.",
+    "trialBadge": "Prova gratuita di 14 giorni • Nessuna carta di credito richiesta",
+    "starter": {
+      "name": "Starter",
+      "description": "Perfetto per individui e piccoli progetti",
+      "price": "9€",
+      "period": "/mese",
+      "features": [
+        "Fino a 10 prodotti",
+        "Controlli giornalieri",
+        "Notifiche email",
+        "Analisi di base",
+        "Supporto email"
+      ],
+      "cta": "Inizia prova gratuita"
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Ideale per aziende in crescita",
+      "price": "29€",
+      "period": "/mese",
+      "badge": "Più Popolare",
+      "bestValue": "Miglior valore per team in crescita",
+      "features": [
+        "Fino a 100 prodotti",
+        "Controlli orari",
+        "Notifiche email + SMS",
+        "Fino a 500 SMS/mese",
+        "Analisi avanzate",
+        "Supporto prioritario",
+        "Accesso API"
+      ],
+      "smsInfo": "500 SMS inclusi al mese",
+      "cta": "Inizia prova gratuita"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "Per grandi organizzazioni",
+      "price": "99€",
+      "period": "/mese",
+      "features": [
+        "Prodotti illimitati",
+        "Monitoraggio in tempo reale",
+        "Tutti i tipi di notifiche",
+        "SMS illimitati",
+        "Report personalizzati",
+        "Supporto dedicato",
+        "Integrazioni personalizzate",
+        "Garanzia SLA"
+      ],
+      "smsInfo": "SMS illimitati inclusi",
+      "cta": "Contatta vendite"
+    }
+  }
+}
+

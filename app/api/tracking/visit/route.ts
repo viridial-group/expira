@@ -54,8 +54,19 @@ export async function POST(request: NextRequest) {
       where: { sessionId },
     })
 
-    // Get location data
-    const location = await locationPromise
+    // Get location data (non-blocking, use default if fails)
+    let location: { country: string | null; city: string | null }
+    try {
+      location = await Promise.race([
+        locationPromise,
+        new Promise<{ country: string | null; city: string | null }>((resolve) => 
+          setTimeout(() => resolve({ country: null, city: null }), 2000)
+        ),
+      ])
+    } catch (error) {
+      // Use default location if geolocation fails
+      location = { country: null, city: null }
+    }
 
     if (!visitor) {
       visitor = await prisma.visitor.create({

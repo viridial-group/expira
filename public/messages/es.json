@@ -1,0 +1,145 @@
+{
+  "common": {
+    "home": "Inicio",
+    "features": "Características",
+    "pricing": "Precios",
+    "contact": "Contacto",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "getStarted": "Comenzar",
+    "language": "Idioma"
+  },
+  "hero": {
+    "title": "Nunca Pierdas",
+    "titleHighlight": "Una Expiración",
+    "subtitle": "Monitorea automáticamente sitios web, certificados SSL, dominios y API. Recibe notificaciones instantáneas antes de que expiren y mantén tu presencia en línea segura.",
+    "startTrial": "Iniciar prueba gratuita",
+    "exploreFeatures": "Explorar características",
+    "noCreditCard": "No se requiere tarjeta de crédito",
+    "freeTrial": "Prueba gratuita de 14 días"
+  },
+  "problem": {
+    "title": "Los Costos Ocultos de las Expiraciones Perdidas",
+    "subtitle": "Los dominios expirados, certificados SSL y caídas de API no detectadas pueden tener graves consecuencias para su negocio.",
+    "security": {
+      "title": "Vulnerabilidades de Seguridad",
+      "description": "Los certificados SSL expirados exponen su sitio web a riesgos de seguridad, erosionando la confianza del cliente y llevando a violaciones de datos."
+    },
+    "trust": {
+      "title": "Pérdida de Confianza del Cliente",
+      "description": "Las caídas del sitio web o las advertencias de seguridad alejan a los clientes, dañando la reputación y lealtad de su marca."
+    },
+    "financial": {
+      "title": "Pérdidas Financieras",
+      "description": "Las renovaciones perdidas pueden resultar en costosas tarifas de recuperación, ventas perdidas e impacto significativo en los ingresos."
+    }
+  },
+  "features": {
+    "title": "Su Solución de Monitoreo Todo-en-Uno",
+    "subtitle": "expira ofrece monitoreo integral para garantizar que sus activos en línea estén siempre seguros y operativos.",
+    "website": {
+      "title": "Monitoreo de Sitios Web y Dominios",
+      "description": "Rastree el tiempo de actividad de su sitio web y las fechas de expiración de dominios. Reciba alertas antes de que se desconecten o expiren."
+    },
+    "ssl": {
+      "title": "Seguimiento de Certificados SSL",
+      "description": "Nunca deje que un certificado SSL expire sin ser notado. Le notificaremos con suficiente anticipación."
+    },
+    "api": {
+      "title": "Monitoreo de Puntos Finales API",
+      "description": "Asegúrese de que sus API críticas siempre respondan y devuelvan los datos correctos."
+    },
+    "notifications": {
+      "title": "Notificaciones Instantáneas",
+      "description": "Reciba alertas por correo electrónico, SMS o notificaciones en la aplicación para cualquier cambio crítico."
+    },
+    "intervals": {
+      "title": "Intervalos de Verificación Personalizables",
+      "description": "Establezca la frecuencia con la que se monitorean sus productos, desde verificaciones diarias hasta verificaciones en tiempo real."
+    },
+    "analytics": {
+      "title": "Análisis e Informes Detallados",
+      "description": "Acceda a informes y análisis completos para comprender el rendimiento de su producto."
+    }
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen Nuestros Clientes",
+    "testimonial1": {
+      "text": "expira nos ha ahorrado innumerables horas y desastres potenciales. ¡Las notificaciones son perfectas!",
+      "author": "John Smith",
+      "role": "CEO, Tech Solutions"
+    },
+    "testimonial2": {
+      "text": "Confiable y fácil de usar. expira es una herramienta esencial para nuestra presencia en línea.",
+      "author": "Jane Doe",
+      "role": "Directora de Marketing, Global Corp"
+    },
+    "testimonial3": {
+      "text": "El mejor servicio de monitoreo que hemos usado. Recomiendo encarecidamente expira a cualquier negocio.",
+      "author": "Peter Jones",
+      "role": "CTO, Innovate Ltd"
+    }
+  },
+  "cta": {
+    "title": "¿Listo para Proteger Sus Activos en Línea?",
+    "subtitle": "Únase a miles de empresas que confían en expira para mantener sus productos seguros.",
+    "button": "Inicie Su Prueba Gratuita"
+  },
+  "pricing": {
+    "title": "Precios Simples y Transparentes",
+    "subtitle": "Elige el plan que se adapte a tus necesidades. Todos los planes incluyen una prueba gratuita de 14 días sin tarjeta de crédito.",
+    "trialBadge": "Prueba gratuita de 14 días • No se requiere tarjeta de crédito",
+    "starter": {
+      "name": "Starter",
+      "description": "Perfecto para individuos y pequeños proyectos",
+      "price": "$9",
+      "period": "/mes",
+      "features": [
+        "Hasta 10 productos",
+        "Verificaciones diarias",
+        "Notificaciones por email",
+        "Análisis básicos",
+        "Soporte por email"
+      ],
+      "cta": "Iniciar prueba gratuita"
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Ideal para empresas en crecimiento",
+      "price": "$29",
+      "period": "/mes",
+      "badge": "Más Popular",
+      "bestValue": "Mejor valor para equipos en crecimiento",
+      "features": [
+        "Hasta 100 productos",
+        "Verificaciones por hora",
+        "Notificaciones email + SMS",
+        "Hasta 500 SMS/mes",
+        "Análisis avanzados",
+        "Soporte prioritario",
+        "Acceso API"
+      ],
+      "smsInfo": "500 SMS incluidos por mes",
+      "cta": "Iniciar prueba gratuita"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "Para grandes organizaciones",
+      "price": "$99",
+      "period": "/mes",
+      "features": [
+        "Productos ilimitados",
+        "Monitoreo en tiempo real",
+        "Todos los tipos de notificaciones",
+        "SMS ilimitados",
+        "Informes personalizados",
+        "Soporte dedicado",
+        "Integraciones personalizadas",
+        "Garantía SLA"
+      ],
+      "smsInfo": "SMS ilimitados incluidos",
+      "cta": "Contactar ventas"
+    }
+  }
+}
+

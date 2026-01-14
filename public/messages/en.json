@@ -1,0 +1,145 @@
+{
+  "common": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "getStarted": "Get Started",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Never Miss an",
+    "titleHighlight": "Expiration Again",
+    "subtitle": "Automatically monitor websites, SSL certificates, domains, and APIs. Get instant notifications before they expire and keep your online presence secure.",
+    "startTrial": "Start Free Trial",
+    "exploreFeatures": "Explore Features",
+    "noCreditCard": "No credit card required",
+    "freeTrial": "14-day free trial"
+  },
+  "problem": {
+    "title": "The Hidden Costs of Missed Expirations",
+    "subtitle": "Expired domains, SSL certificates, and unnoticed API downtimes can lead to severe consequences for your business.",
+    "security": {
+      "title": "Security Vulnerabilities",
+      "description": "Expired SSL certificates expose your website to security risks, eroding customer trust and leading to data breaches."
+    },
+    "trust": {
+      "title": "Loss of Customer Trust",
+      "description": "Website downtime or security warnings drive customers away, damaging your brand reputation and loyalty."
+    },
+    "financial": {
+      "title": "Financial Losses",
+      "description": "Missed renewals can result in costly recovery fees, lost sales, and significant revenue impact."
+    }
+  },
+  "features": {
+    "title": "Your All-in-One Monitoring Solution",
+    "subtitle": "expira provides comprehensive monitoring to ensure your online assets are always secure and operational.",
+    "website": {
+      "title": "Website & Domain Monitoring",
+      "description": "Track your website uptime and domain expiration dates. Get alerts before they go offline or expire."
+    },
+    "ssl": {
+      "title": "SSL Certificate Tracking",
+      "description": "Never let an SSL certificate expire unnoticed. We'll notify you well in advance."
+    },
+    "api": {
+      "title": "API Endpoint Monitoring",
+      "description": "Ensure your critical APIs are always responsive and returning the correct data."
+    },
+    "notifications": {
+      "title": "Instant Notifications",
+      "description": "Receive alerts via email, SMS, or in-app notifications for any critical changes."
+    },
+    "intervals": {
+      "title": "Customizable Check Intervals",
+      "description": "Set how often your products are monitored, from daily to real-time checks."
+    },
+    "analytics": {
+      "title": "Detailed Analytics & Reports",
+      "description": "Access comprehensive reports and analytics to understand your product's performance."
+    }
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "testimonial1": {
+      "text": "expira has saved us countless hours and potential disasters. The notifications are spot on!",
+      "author": "John Smith",
+      "role": "CEO, Tech Solutions"
+    },
+    "testimonial2": {
+      "text": "Reliable and easy to use. expira is an essential tool for our online presence.",
+      "author": "Jane Doe",
+      "role": "Marketing Director, Global Corp"
+    },
+    "testimonial3": {
+      "text": "The best monitoring service we've used. Highly recommend expira to any business.",
+      "author": "Peter Jones",
+      "role": "CTO, Innovate Ltd"
+    }
+  },
+  "cta": {
+    "title": "Ready to Protect Your Online Assets?",
+    "subtitle": "Join thousands of businesses that trust expira to keep their products secure.",
+    "button": "Start Your Free Trial"
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the plan that fits your needs. All plans include a 14-day free trial with no credit card required.",
+    "trialBadge": "14-day free trial • No credit card required",
+    "starter": {
+      "name": "Starter",
+      "description": "Perfect for individuals and small projects",
+      "price": "$9",
+      "period": "/month",
+      "features": [
+        "Up to 10 products",
+        "Daily checks",
+        "Email notifications",
+        "Basic analytics",
+        "Email support"
+      ],
+      "cta": "Start Free Trial"
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Ideal for growing businesses",
+      "price": "$29",
+      "period": "/month",
+      "badge": "Most Popular",
+      "bestValue": "Best value for growing teams",
+      "features": [
+        "Up to 100 products",
+        "Hourly checks",
+        "Email + SMS notifications",
+        "Up to 500 SMS/month",
+        "Advanced analytics",
+        "Priority support",
+        "API access"
+      ],
+      "smsInfo": "500 SMS included per month",
+      "cta": "Start Free Trial"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "For large organizations",
+      "price": "$99",
+      "period": "/month",
+      "features": [
+        "Unlimited products",
+        "Real-time monitoring",
+        "All notification types",
+        "Unlimited SMS",
+        "Custom reports",
+        "Dedicated support",
+        "Custom integrations",
+        "SLA guarantee"
+      ],
+      "smsInfo": "Unlimited SMS included",
+      "cta": "Contact Sales"
+    }
+  }
+}
+

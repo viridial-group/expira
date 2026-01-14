@@ -1,0 +1,145 @@
+{
+  "common": {
+    "home": "Startseite",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "contact": "Kontakt",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "getStarted": "Loslegen",
+    "language": "Sprache"
+  },
+  "hero": {
+    "title": "Verpasse Nie Wieder",
+    "titleHighlight": "Ein Ablaufdatum",
+    "subtitle": "Überwache automatisch Websites, SSL-Zertifikate, Domains und APIs. Erhalte sofortige Benachrichtigungen vor Ablauf und halte deine Online-Präsenz sicher.",
+    "startTrial": "Kostenlose Testversion starten",
+    "exploreFeatures": "Funktionen erkunden",
+    "noCreditCard": "Keine Kreditkarte erforderlich",
+    "freeTrial": "14-tägige kostenlose Testversion"
+  },
+  "problem": {
+    "title": "Die Versteckten Kosten Verpasster Ablaufdaten",
+    "subtitle": "Abgelaufene Domains, SSL-Zertifikate und unbemerkte API-Ausfälle können schwerwiegende Folgen für Ihr Unternehmen haben.",
+    "security": {
+      "title": "Sicherheitslücken",
+      "description": "Abgelaufene SSL-Zertifikate setzen Ihre Website Sicherheitsrisiken aus, untergraben das Kundenvertrauen und führen zu Datenverletzungen."
+    },
+    "trust": {
+      "title": "Verlust des Kundenvertrauens",
+      "description": "Website-Ausfälle oder Sicherheitswarnungen vertreiben Kunden und schädigen den Ruf und die Loyalität Ihrer Marke."
+    },
+    "financial": {
+      "title": "Finanzielle Verluste",
+      "description": "Verpasste Verlängerungen können zu kostspieligen Wiederherstellungsgebühren, verlorenen Verkäufen und erheblichen Umsatzauswirkungen führen."
+    }
+  },
+  "features": {
+    "title": "Ihre All-in-One Überwachungslösung",
+    "subtitle": "expira bietet umfassende Überwachung, um sicherzustellen, dass Ihre Online-Assets immer sicher und betriebsbereit sind.",
+    "website": {
+      "title": "Website- und Domain-Überwachung",
+      "description": "Verfolgen Sie die Betriebszeit Ihrer Website und die Ablaufdaten von Domains. Erhalten Sie Warnungen, bevor sie offline gehen oder ablaufen."
+    },
+    "ssl": {
+      "title": "SSL-Zertifikat-Verfolgung",
+      "description": "Lassen Sie nie ein SSL-Zertifikat unbemerkt ablaufen. Wir benachrichtigen Sie rechtzeitig im Voraus."
+    },
+    "api": {
+      "title": "API-Endpunkt-Überwachung",
+      "description": "Stellen Sie sicher, dass Ihre kritischen APIs immer reaktionsfähig sind und die richtigen Daten zurückgeben."
+    },
+    "notifications": {
+      "title": "Sofortige Benachrichtigungen",
+      "description": "Erhalten Sie Warnungen per E-Mail, SMS oder In-App-Benachrichtigungen für alle kritischen Änderungen."
+    },
+    "intervals": {
+      "title": "Anpassbare Prüfintervalle",
+      "description": "Legen Sie fest, wie oft Ihre Produkte überwacht werden, von täglichen bis zu Echtzeit-Prüfungen."
+    },
+    "analytics": {
+      "title": "Detaillierte Analysen und Berichte",
+      "description": "Greifen Sie auf umfassende Berichte und Analysen zu, um die Leistung Ihres Produkts zu verstehen."
+    }
+  },
+  "testimonials": {
+    "title": "Was Unsere Kunden Sagen",
+    "testimonial1": {
+      "text": "expira hat uns unzählige Stunden und potenzielle Katastrophen erspart. Die Benachrichtigungen sind perfekt!",
+      "author": "John Smith",
+      "role": "CEO, Tech Solutions"
+    },
+    "testimonial2": {
+      "text": "Zuverlässig und einfach zu bedienen. expira ist ein unverzichtbares Tool für unsere Online-Präsenz.",
+      "author": "Jane Doe",
+      "role": "Marketingdirektorin, Global Corp"
+    },
+    "testimonial3": {
+      "text": "Der beste Überwachungsservice, den wir verwendet haben. Ich empfehle expira jedem Unternehmen wärmstens.",
+      "author": "Peter Jones",
+      "role": "CTO, Innovate Ltd"
+    }
+  },
+  "cta": {
+    "title": "Bereit, Ihre Online-Assets zu Schützen?",
+    "subtitle": "Schließen Sie sich Tausenden von Unternehmen an, die expira vertrauen, um ihre Produkte sicher zu halten.",
+    "button": "Starten Sie Ihre Kostenlose Testversion"
+  },
+  "pricing": {
+    "title": "Einfache, Transparente Preise",
+    "subtitle": "Wähle den Plan, der zu deinen Bedürfnissen passt. Alle Pläne beinhalten eine 14-tägige kostenlose Testversion ohne Kreditkarte.",
+    "trialBadge": "14-tägige kostenlose Testversion • Keine Kreditkarte erforderlich",
+    "starter": {
+      "name": "Starter",
+      "description": "Perfekt für Einzelpersonen und kleine Projekte",
+      "price": "9€",
+      "period": "/Monat",
+      "features": [
+        "Bis zu 10 Produkte",
+        "Tägliche Überprüfungen",
+        "E-Mail-Benachrichtigungen",
+        "Grundlegende Analysen",
+        "E-Mail-Support"
+      ],
+      "cta": "Kostenlose Testversion starten"
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Ideal für wachsende Unternehmen",
+      "price": "29€",
+      "period": "/Monat",
+      "badge": "Beliebtester",
+      "bestValue": "Bester Wert für wachsende Teams",
+      "features": [
+        "Bis zu 100 Produkte",
+        "Stündliche Überprüfungen",
+        "E-Mail + SMS-Benachrichtigungen",
+        "Bis zu 500 SMS/Monat",
+        "Erweiterte Analysen",
+        "Prioritätssupport",
+        "API-Zugang"
+      ],
+      "smsInfo": "500 SMS pro Monat enthalten",
+      "cta": "Kostenlose Testversion starten"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "Für große Organisationen",
+      "price": "99€",
+      "period": "/Monat",
+      "features": [
+        "Unbegrenzte Produkte",
+        "Echtzeit-Überwachung",
+        "Alle Benachrichtigungstypen",
+        "Unbegrenzte SMS",
+        "Benutzerdefinierte Berichte",
+        "Dedizierter Support",
+        "Benutzerdefinierte Integrationen",
+        "SLA-Garantie"
+      ],
+      "smsInfo": "Unbegrenzte SMS enthalten",
+      "cta": "Verkauf kontaktieren"
+    }
+  }
+}
+

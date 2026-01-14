@@ -1,0 +1,145 @@
+{
+  "common": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "contact": "Contact",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "getStarted": "Commencer",
+    "language": "Langue"
+  },
+  "hero": {
+    "title": "Ne Manquez Plus Jamais",
+    "titleHighlight": "Une Expiration",
+    "subtitle": "Surveillez automatiquement les sites web, certificats SSL, domaines et API. Recevez des notifications instantanées avant leur expiration et gardez votre présence en ligne sécurisée.",
+    "startTrial": "Démarrer l'essai gratuit",
+    "exploreFeatures": "Explorer les fonctionnalités",
+    "noCreditCard": "Aucune carte bancaire requise",
+    "freeTrial": "Essai gratuit de 14 jours"
+  },
+  "problem": {
+    "title": "Les Coûts Cachés des Expirations Manquées",
+    "subtitle": "Les domaines expirés, certificats SSL et pannes d'API non détectées peuvent avoir de graves conséquences pour votre entreprise.",
+    "security": {
+      "title": "Vulnérabilités de Sécurité",
+      "description": "Les certificats SSL expirés exposent votre site web à des risques de sécurité, érodent la confiance des clients et conduisent à des violations de données."
+    },
+    "trust": {
+      "title": "Perte de Confiance des Clients",
+      "description": "Les pannes de site web ou les avertissements de sécurité éloignent les clients, endommageant la réputation et la fidélité de votre marque."
+    },
+    "financial": {
+      "title": "Pertes Financières",
+      "description": "Les renouvellements manqués peuvent entraîner des frais de récupération coûteux, des ventes perdues et un impact significatif sur les revenus."
+    }
+  },
+  "features": {
+    "title": "Votre Solution de Surveillance Tout-en-Un",
+    "subtitle": "expira offre une surveillance complète pour garantir que vos actifs en ligne sont toujours sécurisés et opérationnels.",
+    "website": {
+      "title": "Surveillance des Sites Web et Domaines",
+      "description": "Suivez la disponibilité de votre site web et les dates d'expiration des domaines. Recevez des alertes avant qu'ils ne soient hors ligne ou expirés."
+    },
+    "ssl": {
+      "title": "Suivi des Certificats SSL",
+      "description": "Ne laissez jamais un certificat SSL expirer sans être remarqué. Nous vous avertirons bien à l'avance."
+    },
+    "api": {
+      "title": "Surveillance des Points de Terminaison API",
+      "description": "Assurez-vous que vos API critiques sont toujours réactives et renvoient les bonnes données."
+    },
+    "notifications": {
+      "title": "Notifications Instantanées",
+      "description": "Recevez des alertes par email, SMS ou notifications dans l'application pour tout changement critique."
+    },
+    "intervals": {
+      "title": "Intervalles de Vérification Personnalisables",
+      "description": "Définissez la fréquence de surveillance de vos produits, des vérifications quotidiennes aux vérifications en temps réel."
+    },
+    "analytics": {
+      "title": "Analyses et Rapports Détaillés",
+      "description": "Accédez à des rapports et analyses complets pour comprendre les performances de votre produit."
+    }
+  },
+  "testimonials": {
+    "title": "Ce Que Disent Nos Clients",
+    "testimonial1": {
+      "text": "expira nous a fait économiser d'innombrables heures et des catastrophes potentielles. Les notifications sont parfaites !",
+      "author": "John Smith",
+      "role": "PDG, Tech Solutions"
+    },
+    "testimonial2": {
+      "text": "Fiable et facile à utiliser. expira est un outil essentiel pour notre présence en ligne.",
+      "author": "Jane Doe",
+      "role": "Directrice Marketing, Global Corp"
+    },
+    "testimonial3": {
+      "text": "Le meilleur service de surveillance que nous ayons utilisé. Je recommande vivement expira à toute entreprise.",
+      "author": "Peter Jones",
+      "role": "CTO, Innovate Ltd"
+    }
+  },
+  "cta": {
+    "title": "Prêt à Protéger Vos Actifs en Ligne ?",
+    "subtitle": "Rejoignez des milliers d'entreprises qui font confiance à expira pour sécuriser leurs produits.",
+    "button": "Démarrer Votre Essai Gratuit"
+  },
+  "pricing": {
+    "title": "Tarification Simple et Transparente",
+    "subtitle": "Choisissez le plan qui correspond à vos besoins. Tous les plans incluent un essai gratuit de 14 jours sans carte bancaire.",
+    "trialBadge": "Essai gratuit de 14 jours • Aucune carte bancaire requise",
+    "starter": {
+      "name": "Starter",
+      "description": "Parfait pour les particuliers et petits projets",
+      "price": "9€",
+      "period": "/mois",
+      "features": [
+        "Jusqu'à 10 produits",
+        "Vérifications quotidiennes",
+        "Notifications par email",
+        "Analyses de base",
+        "Support par email"
+      ],
+      "cta": "Démarrer l'essai gratuit"
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Idéal pour les entreprises en croissance",
+      "price": "29€",
+      "period": "/mois",
+      "badge": "Le Plus Populaire",
+      "bestValue": "Meilleur rapport qualité-prix pour les équipes",
+      "features": [
+        "Jusqu'à 100 produits",
+        "Vérifications horaires",
+        "Notifications email + SMS",
+        "Jusqu'à 500 SMS/mois",
+        "Analyses avancées",
+        "Support prioritaire",
+        "Accès API"
+      ],
+      "smsInfo": "500 SMS inclus par mois",
+      "cta": "Démarrer l'essai gratuit"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "Pour les grandes organisations",
+      "price": "99€",
+      "period": "/mois",
+      "features": [
+        "Produits illimités",
+        "Surveillance en temps réel",
+        "Tous les types de notifications",
+        "SMS illimités",
+        "Rapports personnalisés",
+        "Support dédié",
+        "Intégrations personnalisées",
+        "Garantie SLA"
+      ],
+      "smsInfo": "SMS illimités inclus",
+      "cta": "Contacter les ventes"
+    }
+  }
+}
+

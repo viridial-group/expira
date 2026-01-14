@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { CreditCard, Download, Calendar, DollarSign, CheckCircle, XCircle, Clock, AlertCircle, ExternalLink } from 'lucide-react'
+import { CreditCard, Download, Calendar, DollarSign, CheckCircle, XCircle, Clock, AlertCircle, ExternalLink, RefreshCw } from 'lucide-react'
 import { Card, Badge, Button } from '@/components/ui'
 import toast from 'react-hot-toast'
 
@@ -33,6 +33,7 @@ interface Pagination {
 export default function PaymentHistoryPage() {
   const [payments, setPayments] = useState<Payment[]>([])
   const [loading, setLoading] = useState(true)
+  const [syncing, setSyncing] = useState(false)
   const [pagination, setPagination] = useState<Pagination>({
     page: 1,
     limit: 20,
@@ -61,6 +62,28 @@ export default function PaymentHistoryPage() {
   useEffect(() => {
     fetchPayments()
   }, [fetchPayments])
+
+  const syncPayments = async () => {
+    setSyncing(true)
+    try {
+      const res = await fetch('/api/payments/sync', {
+        method: 'POST',
+      })
+      const data = await res.json()
+      
+      if (res.ok) {
+        toast.success(`Synced ${data.synced} payment(s) from Stripe`)
+        // Refresh payments list
+        await fetchPayments()
+      } else {
+        toast.error(data.error || 'Failed to sync payments')
+      }
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setSyncing(false)
+    }
+  }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -149,10 +172,20 @@ export default function PaymentHistoryPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment History</h1>
             <p className="text-gray-600">View all your payment transactions</p>
           </div>
-          <Button onClick={handleExport} variant="outline">
-            <Download className="h-5 w-5 mr-2" />
-            Export CSV
-          </Button>
+          <div className="flex gap-3">
+            <Button 
+              onClick={syncPayments} 
+              variant="outline"
+              disabled={syncing}
+            >
+              <RefreshCw className={`h-5 w-5 mr-2 ${syncing ? 'animate-spin' : ''}`} />
+              {syncing ? 'Syncing...' : 'Sync from Stripe'}
+            </Button>
+            <Button onClick={handleExport} variant="outline">
+              <Download className="h-5 w-5 mr-2" />
+              Export CSV
+            </Button>
+          </div>
         </div>
       </div>
 

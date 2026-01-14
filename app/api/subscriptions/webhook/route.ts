@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Create or update subscription in database
-        await prisma.subscription.upsert({
+        const dbSubscription = await prisma.subscription.upsert({
           where: {
             stripeSubscriptionId: subscription.id,
           },
@@ -81,6 +81,53 @@ export async function POST(request: NextRequest) {
             cancelAtPeriodEnd: subscription.cancel_at_period_end || false,
           },
         })
+
+        // If payment was made immediately (no trial or trial ended), create payment record
+        if (session.payment_status === 'paid' && session.payment_intent) {
+          try {
+            const paymentIntent = await stripe.paymentIntents.retrieve(
+              session.payment_intent as string
+            )
+
+            // Check if payment already exists
+            const existingPayment = await prisma.payment.findUnique({
+              where: {
+                stripePaymentIntentId: paymentIntent.id,
+              },
+            })
+
+            if (!existingPayment && paymentIntent.status === 'succeeded') {
+              // Get invoice if available
+              let invoice = null
+              if (session.invoice) {
+                try {
+                  invoice = await stripe.invoices.retrieve(session.invoice as string)
+                } catch (err) {
+                  console.error('Error retrieving invoice:', err)
+                }
+              }
+
+              await prisma.payment.create({
+                data: {
+                  userId,
+                  subscriptionId: dbSubscription.id,
+                  stripePaymentIntentId: paymentIntent.id,
+                  stripeInvoiceId: invoice?.id || null,
+                  amount: paymentIntent.amount,
+                  currency: paymentIntent.currency || 'usd',
+                  status: 'succeeded',
+                  description: invoice?.description || `Payment for ${planId} plan`,
+                  planId,
+                  periodStart: invoice?.period_start ? new Date(invoice.period_start * 1000) : null,
+                  periodEnd: invoice?.period_end ? new Date(invoice.period_end * 1000) : null,
+                },
+              })
+            }
+          } catch (paymentError) {
+            console.error('Error creating payment from checkout session:', paymentError)
+            // Don't fail the webhook if payment creation fails
+          }
+        }
 
         // Create notification
         await prisma.notification.create({
@@ -220,21 +267,82 @@ export async function POST(request: NextRequest) {
           })
 
           if (dbSubscription && invoice.payment_intent) {
-            await prisma.payment.create({
-              data: {
-                userId: dbSubscription.userId,
-                subscriptionId: dbSubscription.id,
+            // Check if payment already exists
+            const existingPayment = await prisma.payment.findUnique({
+              where: {
                 stripePaymentIntentId: invoice.payment_intent as string,
-                stripeInvoiceId: invoice.id,
-                amount: invoice.amount_due,
-                currency: invoice.currency || 'usd',
-                status: 'failed',
-                description: invoice.description || `Failed payment for ${dbSubscription.planId} plan`,
-                planId: dbSubscription.planId,
-                periodStart: invoice.period_start ? new Date(invoice.period_start * 1000) : null,
-                periodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
               },
             })
+
+            if (!existingPayment) {
+              await prisma.payment.create({
+                data: {
+                  userId: dbSubscription.userId,
+                  subscriptionId: dbSubscription.id,
+                  stripePaymentIntentId: invoice.payment_intent as string,
+                  stripeInvoiceId: invoice.id,
+                  amount: invoice.amount_due,
+                  currency: invoice.currency || 'usd',
+                  status: 'failed',
+                  description: invoice.description || `Failed payment for ${dbSubscription.planId} plan`,
+                  planId: dbSubscription.planId,
+                  periodStart: invoice.period_start ? new Date(invoice.period_start * 1000) : null,
+                  periodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
+                },
+              })
+            }
+          }
+        }
+
+        break
+      }
+
+      case 'payment_intent.succeeded': {
+        // Backup handler for payment intents that might not have invoices yet
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
+        
+        // Only process if it's related to a subscription
+        if (paymentIntent.metadata?.subscription_id) {
+          try {
+            const subscription = await stripe.subscriptions.retrieve(
+              paymentIntent.metadata.subscription_id
+            )
+
+            const dbSubscription = await prisma.subscription.findUnique({
+              where: {
+                stripeSubscriptionId: subscription.id,
+              },
+            })
+
+            if (dbSubscription) {
+              // Check if payment already exists
+              const existingPayment = await prisma.payment.findUnique({
+                where: {
+                  stripePaymentIntentId: paymentIntent.id,
+                },
+              })
+
+              if (!existingPayment) {
+                await prisma.payment.create({
+                  data: {
+                    userId: dbSubscription.userId,
+                    subscriptionId: dbSubscription.id,
+                    stripePaymentIntentId: paymentIntent.id,
+                    stripeInvoiceId: null,
+                    amount: paymentIntent.amount,
+                    currency: paymentIntent.currency || 'usd',
+                    status: 'succeeded',
+                    description: `Payment for ${dbSubscription.planId} plan`,
+                    planId: dbSubscription.planId,
+                    periodStart: null,
+                    periodEnd: null,
+                  },
+                })
+              }
+            }
+          } catch (error) {
+            console.error('Error processing payment_intent.succeeded:', error)
+            // Don't fail the webhook
           }
         }
 

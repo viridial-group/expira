@@ -491,6 +491,14 @@ export async function POST(
           message
         )
       }
+
+      // Send push notification for all errors and expirations
+      await createNotification(
+        user.id,
+        'push',
+        `Product Check: ${product.name}`,
+        message
+      )
     }
 
     return NextResponse.json({

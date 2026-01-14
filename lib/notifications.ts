@@ -195,6 +195,14 @@ export async function checkProductExpiration() {
           notificationMessage
         )
       }
+
+      // Send push notification for all expirations
+      await createNotification(
+        product.userId,
+        'push',
+        notificationTitle,
+        notificationMessage
+      )
     }
   }
 }

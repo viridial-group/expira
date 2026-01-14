@@ -20,7 +20,10 @@ export default function PushNotificationManager({ className }: PushNotificationM
   }, [])
 
   const checkSupport = async () => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') {
+      setIsLoading(false)
+      return
+    }
 
     // Check if browser supports notifications
     if (!('Notification' in window)) {
@@ -36,16 +39,68 @@ export default function PushNotificationManager({ className }: PushNotificationM
       return
     }
 
+    // Check if VAPID key is configured
+    const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+    if (!vapidPublicKey) {
+      setIsSupported(false)
+      setIsLoading(false)
+      return
+    }
+
     setIsSupported(true)
     setPermission(Notification.permission)
 
     // Check if already subscribed
     try {
-      const registration = await navigator.serviceWorker.ready
-      const subscription = await registration.pushManager.getSubscription()
-      setIsSubscribed(!!subscription)
-    } catch (error) {
+      // First, try to get existing registration
+      let registration = await navigator.serviceWorker.getRegistration()
+      
+      // If no registration exists, register the service worker
+      if (!registration) {
+        try {
+          registration = await navigator.serviceWorker.register('/sw.js', {
+            scope: '/',
+          })
+        } catch (swError: any) {
+          console.error('Service worker registration error:', swError)
+          setIsSupported(false)
+          setIsLoading(false)
+          return
+        }
+      }
+
+      // Wait for service worker to be ready (with timeout)
+      try {
+        const readyPromise = navigator.serviceWorker.ready
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Service worker timeout')), 3000)
+        )
+
+        await Promise.race([readyPromise, timeoutPromise])
+
+        // Check subscription
+        if (registration) {
+          try {
+            const subscription = await registration.pushManager.getSubscription()
+            setIsSubscribed(!!subscription)
+          } catch (subError) {
+            console.error('Error getting subscription:', subError)
+            setIsSubscribed(false)
+          }
+        }
+      } catch (timeoutError: any) {
+        if (timeoutError.message === 'Service worker timeout') {
+          console.warn('Service worker took too long to become ready')
+          // Still allow user to try, but mark as not subscribed
+          setIsSubscribed(false)
+        } else {
+          throw timeoutError
+        }
+      }
+    } catch (error: any) {
       console.error('Error checking subscription:', error)
+      // If service worker registration fails, still allow user to try
+      setIsSubscribed(false)
     } finally {
       setIsLoading(false)
     }
@@ -199,15 +254,25 @@ export default function PushNotificationManager({ className }: PushNotificationM
 
   if (isLoading) {
     return (
-      <Button variant="outline" disabled className={className}>
-        <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary-600 border-t-transparent mr-2"></div>
-        Loading...
-      </Button>
+      <div className={className}>
+        <Button variant="outline" disabled>
+          <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary-600 border-t-transparent mr-2"></div>
+          Checking...
+        </Button>
+      </div>
     )
   }
 
   if (!isSupported) {
-    return null // Don't show anything if not supported
+    return (
+      <div className={className}>
+        <p className="text-sm text-gray-500">
+          {!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY 
+            ? 'Push notifications not configured'
+            : 'Push notifications not supported in your browser'}
+        </p>
+      </div>
+    )
   }
 
   if (permission === 'denied') {

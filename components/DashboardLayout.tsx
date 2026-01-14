@@ -42,7 +42,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Add Product', href: '/dashboard/products/new', icon: Plus },
     { name: 'Notifications', href: '/dashboard/notifications', icon: Bell },
-    { name: 'Payment History', href: '/dashboard/payments', icon: CreditCard },
+    { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
+    { name: 'Payment History', href: '/dashboard/payments', icon: FileText },
     { name: 'Affiliate Program', href: '/dashboard/affiliate', icon: Gift },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },
     ...(isAdmin ? [

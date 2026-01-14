@@ -92,6 +92,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Preload translations for faster loading */}
+        <link rel="preload" href="/messages/en.json" as="fetch" crossOrigin="anonymous" />
         {/* Google Tag Manager - Inline script in head as recommended by Google */}
         {/* eslint-disable-next-line @next/next/next-script-for-ga */}
         <script
@@ -101,6 +103,12 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${gtmId}');`,
+          }}
+        />
+        {/* Preload current locale translations */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var locale=document.cookie.split('; ').find(function(r){return r.startsWith('NEXT_LOCALE=');});if(locale){locale=locale.split('=')[1];if(locale&&locale!=='en'){var link=document.createElement('link');link.rel='preload';link.href='/messages/'+locale+'.json';link.as='fetch';link.crossOrigin='anonymous';document.head.appendChild(link);}}})();`,
           }}
         />
         {/* End Google Tag Manager */}

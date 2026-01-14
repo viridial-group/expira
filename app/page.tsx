@@ -11,13 +11,23 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 // Metadata is handled in layout.tsx
 
 export default function Home() {
-  const { t } = useI18n()
+  const { t, loading: i18nLoading } = useI18n()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [newsletterName, setNewsletterName] = useState('')
   const [newsletterLoading, setNewsletterLoading] = useState(false)
   const [newsletterSuccess, setNewsletterSuccess] = useState(false)
+
+  // Listen for locale changes
+  useEffect(() => {
+    const handleLocaleChange = () => {
+      // Force re-render when locale changes
+      window.location.reload()
+    }
+    window.addEventListener('localechange', handleLocaleChange)
+    return () => window.removeEventListener('localechange', handleLocaleChange)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {

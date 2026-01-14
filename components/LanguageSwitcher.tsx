@@ -48,8 +48,20 @@ export default function LanguageSwitcher() {
     // Store locale preference in cookie
     document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=31536000`
     
-    // Reload page to apply new language
-    window.location.reload()
+    // Update current locale immediately for UI feedback
+    setCurrentLocale(locale)
+    
+    // Preload the new locale's messages before reloading
+    // Prefetch the messages file
+    fetch(`/messages/${locale}.json`)
+      .then(() => {
+        // Once loaded, reload the page
+        window.location.reload()
+      })
+      .catch(() => {
+        // Even if fetch fails, reload to apply the change
+        window.location.reload()
+      })
   }
 
   return (

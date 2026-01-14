@@ -50,12 +50,28 @@ export async function canSendSMS(userId: string): Promise<{ allowed: boolean; re
 
     // Count SMS sent this month
     const now = new Date()
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-    
-    // Note: We would need to track SMS usage in the database
-    // For now, we'll use a simple check
-    // TODO: Implement SMS usage tracking
-    const used = 0 // Placeholder - implement actual tracking
+    const currentMonth = now.getMonth() + 1 // 1-12
+    const currentYear = now.getFullYear()
+
+    // Get or create SMS usage record for this month
+    const smsUsage = await prisma.sMSUsage.upsert({
+      where: {
+        userId_month_year: {
+          userId,
+          month: currentMonth,
+          year: currentYear,
+        },
+      },
+      create: {
+        userId,
+        month: currentMonth,
+        year: currentYear,
+        count: 0,
+      },
+      update: {},
+    })
+
+    const used = smsUsage.count
 
     if (used >= limit) {
       return {
@@ -81,9 +97,35 @@ export async function canSendSMS(userId: string): Promise<{ allowed: boolean; re
 }
 
 export async function recordSMSSent(userId: string): Promise<void> {
-  // TODO: Implement SMS usage tracking
-  // This would increment a counter in the database for the current month
-  // For now, this is a placeholder
-  console.log(`SMS sent for user ${userId}`)
+  try {
+    const now = new Date()
+    const currentMonth = now.getMonth() + 1 // 1-12
+    const currentYear = now.getFullYear()
+
+    // Increment SMS count for this month
+    await prisma.sMSUsage.upsert({
+      where: {
+        userId_month_year: {
+          userId,
+          month: currentMonth,
+          year: currentYear,
+        },
+      },
+      create: {
+        userId,
+        month: currentMonth,
+        year: currentYear,
+        count: 1,
+      },
+      update: {
+        count: {
+          increment: 1,
+        },
+      },
+    })
+  } catch (error) {
+    console.error('Error recording SMS usage:', error)
+    // Don't throw - SMS was sent, just tracking failed
+  }
 }
 

@@ -29,15 +29,17 @@ model User {
   contactResponses ContactResponse[]
   payments         Payment[]
   emailCampaigns   EmailCampaign[]
-  
+
   // Affiliate relations
-  affiliateCode            AffiliateCode?
-  referredByAffiliateCode  String?              // Code used during registration
-  referredBy               AffiliateReferral[]  @relation("ReferredUsers")
-  affiliateReferrals       AffiliateReferral[]  @relation("AffiliateUser")
-  affiliateCommissions     AffiliateCommission[]
-  pushSubscriptions        PushSubscription[]
-  passwordResetTokens      PasswordResetToken[]
+  affiliateCode           AffiliateCode?
+  referredByAffiliateCode String? // Code used during registration
+  referredBy              AffiliateReferral[]   @relation("ReferredUsers")
+  affiliateReferrals      AffiliateReferral[]   @relation("AffiliateUser")
+  affiliateCommissions    AffiliateCommission[]
+  pushSubscriptions       PushSubscription[]
+  passwordResetTokens     PasswordResetToken[]
+  smsUsage                SMSUsage[]
+  phoneVerifications      PhoneVerification[]
 
   @@map("users")
 }
@@ -121,7 +123,7 @@ model Payment {
   periodEnd             DateTime?
   createdAt             DateTime      @default(now())
 
-  affiliateCommission   AffiliateCommission?
+  affiliateCommission AffiliateCommission?
 
   @@map("payments")
 }
@@ -167,189 +169,189 @@ model ContactResponse {
 }
 
 model EmailCampaign {
-  id          String   @id @default(cuid())
-  createdBy   String
-  creator     User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
-  subject     String
-  content     String   // HTML content
-  recipientType String // "all", "active", "trialing", "canceled", "custom"
+  id              String    @id @default(cuid())
+  createdBy       String
+  creator         User      @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  subject         String
+  content         String // HTML content
+  recipientType   String // "all", "active", "trialing", "canceled", "custom"
   recipientEmails Json? // Custom email list if recipientType is "custom"
-  status      String   @default("draft") // "draft", "scheduled", "sending", "sent", "failed"
-  sentCount   Int      @default(0)
-  failedCount Int      @default(0)
-  totalRecipients Int  @default(0)
-  scheduledAt DateTime?
-  sentAt      DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status          String    @default("draft") // "draft", "scheduled", "sending", "sent", "failed"
+  sentCount       Int       @default(0)
+  failedCount     Int       @default(0)
+  totalRecipients Int       @default(0)
+  scheduledAt     DateTime?
+  sentAt          DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  opens       CampaignOpen[]
-  clicks      CampaignClick[]
+  opens  CampaignOpen[]
+  clicks CampaignClick[]
 
   @@map("email_campaigns")
 }
 
 model CampaignOpen {
-  id          String        @id @default(cuid())
-  campaignId  String
-  campaign    EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  email       String        // Recipient email
-  openedAt    DateTime      @default(now())
-  ipAddress   String?
-  userAgent   String?
+  id         String        @id @default(cuid())
+  campaignId String
+  campaign   EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  email      String // Recipient email
+  openedAt   DateTime      @default(now())
+  ipAddress  String?
+  userAgent  String?
 
-  @@map("campaign_opens")
   @@index([campaignId])
   @@index([email])
   @@index([openedAt])
+  @@map("campaign_opens")
 }
 
 model CampaignClick {
-  id          String        @id @default(cuid())
-  campaignId  String
-  campaign    EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  email       String        // Recipient email
-  url         String        // Clicked URL
-  clickedAt   DateTime      @default(now())
-  ipAddress   String?
-  userAgent   String?
+  id         String        @id @default(cuid())
+  campaignId String
+  campaign   EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  email      String // Recipient email
+  url        String // Clicked URL
+  clickedAt  DateTime      @default(now())
+  ipAddress  String?
+  userAgent  String?
 
-  @@map("campaign_clicks")
   @@index([campaignId])
   @@index([email])
   @@index([clickedAt])
+  @@map("campaign_clicks")
 }
 
 model Visitor {
-  id          String   @id @default(cuid())
-  sessionId   String   @unique // Unique session identifier
-  ipAddress   String?
-  userAgent   String?
-  country     String?
-  city        String?
-  referrer    String?  // Where they came from
-  firstVisit  DateTime @default(now())
-  lastVisit   DateTime @default(now())
-  visitCount  Int      @default(1)
-  
-  visits      Visit[]
-  
+  id         String   @id @default(cuid())
+  sessionId  String   @unique // Unique session identifier
+  ipAddress  String?
+  userAgent  String?
+  country    String?
+  city       String?
+  referrer   String? // Where they came from
+  firstVisit DateTime @default(now())
+  lastVisit  DateTime @default(now())
+  visitCount Int      @default(1)
+
+  visits Visit[]
+
   @@map("visitors")
 }
 
 model Visit {
-  id          String   @id @default(cuid())
-  visitorId   String
-  visitor     Visitor  @relation(fields: [visitorId], references: [id], onDelete: Cascade)
-  path        String   // Page path (e.g., "/", "/pricing", "/dashboard")
-  referrer    String?  // HTTP referrer
-  duration    Int?     // Time spent on page in seconds
-  createdAt   DateTime @default(now())
-  
-  @@map("visits")
+  id        String   @id @default(cuid())
+  visitorId String
+  visitor   Visitor  @relation(fields: [visitorId], references: [id], onDelete: Cascade)
+  path      String // Page path (e.g., "/", "/pricing", "/dashboard")
+  referrer  String? // HTTP referrer
+  duration  Int? // Time spent on page in seconds
+  createdAt DateTime @default(now())
+
   @@index([visitorId])
   @@index([path])
   @@index([createdAt])
+  @@map("visits")
 }
 
 model AffiliateCode {
-  id            String   @id @default(cuid())
-  userId        String   @unique
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  code          String   @unique // Unique referral code
-  isActive      Boolean  @default(true)
-  totalReferrals Int     @default(0)
-  totalEarnings Int      @default(0) // Total earnings in cents
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code           String   @unique // Unique referral code
+  isActive       Boolean  @default(true)
+  totalReferrals Int      @default(0)
+  totalEarnings  Int      @default(0) // Total earnings in cents
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  referrals    AffiliateReferral[]
-  commissions  AffiliateCommission[]
+  referrals   AffiliateReferral[]
+  commissions AffiliateCommission[]
 
-  @@map("affiliate_codes")
   @@index([code])
+  @@map("affiliate_codes")
 }
 
 model AffiliateReferral {
-  id              String   @id @default(cuid())
+  id              String        @id @default(cuid())
   affiliateCodeId String
   affiliateCode   AffiliateCode @relation(fields: [affiliateCodeId], references: [id], onDelete: Cascade)
-  affiliateUserId String   // User who owns the affiliate code
-  affiliateUser   User     @relation("AffiliateUser", fields: [affiliateUserId], references: [id], onDelete: Cascade)
-  referredUserId  String   @unique // User who was referred
-  referredUser    User     @relation("ReferredUsers", fields: [referredUserId], references: [id], onDelete: Cascade)
-  status          String   @default("pending") // "pending", "completed", "converted"
-  hasConverted    Boolean  @default(false) // Has the referred user subscribed?
-  createdAt       DateTime @default(now())
+  affiliateUserId String // User who owns the affiliate code
+  affiliateUser   User          @relation("AffiliateUser", fields: [affiliateUserId], references: [id], onDelete: Cascade)
+  referredUserId  String        @unique // User who was referred
+  referredUser    User          @relation("ReferredUsers", fields: [referredUserId], references: [id], onDelete: Cascade)
+  status          String        @default("pending") // "pending", "completed", "converted"
+  hasConverted    Boolean       @default(false) // Has the referred user subscribed?
+  createdAt       DateTime      @default(now())
   convertedAt     DateTime?
 
-  commission      AffiliateCommission?
+  commission AffiliateCommission?
 
-  @@map("affiliate_referrals")
   @@index([affiliateCodeId])
   @@index([affiliateUserId])
   @@index([referredUserId])
   @@index([status])
+  @@map("affiliate_referrals")
 }
 
 model AffiliateCommission {
-  id                String   @id @default(cuid())
-  affiliateCodeId   String
-  affiliateCode     AffiliateCode @relation(fields: [affiliateCodeId], references: [id], onDelete: Cascade)
-  affiliateUserId   String
-  affiliateUser     User     @relation(fields: [affiliateUserId], references: [id], onDelete: Cascade)
-  referralId        String   @unique
-  referral          AffiliateReferral @relation(fields: [referralId], references: [id], onDelete: Cascade)
-  paymentId         String?  @unique // Related payment if commission is from subscription
-  payment           Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
-  amount            Int      // Commission amount in cents
-  commissionType    String   // "signup", "subscription", "recurring"
-  status            String   @default("pending") // "pending", "approved", "paid", "cancelled"
-  commissionRate    Float    // Percentage or fixed rate
-  createdAt         DateTime @default(now())
-  approvedAt        DateTime?
-  paidAt            DateTime?
+  id              String            @id @default(cuid())
+  affiliateCodeId String
+  affiliateCode   AffiliateCode     @relation(fields: [affiliateCodeId], references: [id], onDelete: Cascade)
+  affiliateUserId String
+  affiliateUser   User              @relation(fields: [affiliateUserId], references: [id], onDelete: Cascade)
+  referralId      String            @unique
+  referral        AffiliateReferral @relation(fields: [referralId], references: [id], onDelete: Cascade)
+  paymentId       String?           @unique // Related payment if commission is from subscription
+  payment         Payment?          @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+  amount          Int // Commission amount in cents
+  commissionType  String // "signup", "subscription", "recurring"
+  status          String            @default("pending") // "pending", "approved", "paid", "cancelled"
+  commissionRate  Float // Percentage or fixed rate
+  createdAt       DateTime          @default(now())
+  approvedAt      DateTime?
+  paidAt          DateTime?
 
-  @@map("affiliate_commissions")
   @@index([affiliateCodeId])
   @@index([affiliateUserId])
   @@index([status])
   @@index([createdAt])
+  @@map("affiliate_commissions")
 }
 
 model NewsletterSubscriber {
-  id          String   @id @default(cuid())
-  email       String   @unique
-  name        String?
-  source      String?  // "landing_page", "contact_form", "manual", etc.
-  status      String   @default("active") // "active", "unsubscribed", "bounced"
-  subscribedAt DateTime @default(now())
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String?
+  source         String? // "landing_page", "contact_form", "manual", etc.
+  status         String    @default("active") // "active", "unsubscribed", "bounced"
+  subscribedAt   DateTime  @default(now())
   unsubscribedAt DateTime?
-  metadata    Json?    // Additional data (IP, user agent, etc.)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  metadata       Json? // Additional data (IP, user agent, etc.)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  @@map("newsletter_subscribers")
   @@index([email])
   @@index([status])
   @@index([subscribedAt])
+  @@map("newsletter_subscribers")
 }
 
 model PushSubscription {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  endpoint    String   @unique // Push service endpoint URL
-  p256dh      String   // User public key
-  auth        String   // User auth secret
-  userAgent   String?  // Browser user agent
-  enabled     Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique // Push service endpoint URL
+  p256dh    String // User public key
+  auth      String // User auth secret
+  userAgent String? // Browser user agent
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("push_subscriptions")
   @@index([userId])
   @@index([enabled])
+  @@map("push_subscriptions")
 }
 
 model PasswordResetToken {
@@ -361,8 +363,40 @@ model PasswordResetToken {
   used      Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  @@map("password_reset_tokens")
   @@index([token])
   @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}
+
+model SMSUsage {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  month     Int // Month (1-12)
+  year      Int // Year (e.g., 2024)
+  count     Int      @default(0) // Number of SMS sent this month
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, month, year])
+  @@index([userId])
+  @@index([year, month])
+  @@map("sms_usage")
+}
+
+model PhoneVerification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone     String   // Phone number in E.164 format
+  code      String   // 6-digit verification code
+  expiresAt DateTime // Code expiration time (10 minutes)
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("phone_verifications")
+  @@index([userId])
+  @@index([code])
   @@index([expiresAt])
 }

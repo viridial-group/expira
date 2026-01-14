@@ -45,6 +45,9 @@ export default function SettingsPage() {
   const [subscriptionLoading, setSubscriptionLoading] = useState(true)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [profileLoading, setProfileLoading] = useState(true)
+  const [verifyingPhone, setVerifyingPhone] = useState(false)
+  const [verificationCode, setVerificationCode] = useState('')
+  const [showVerificationCode, setShowVerificationCode] = useState(false)
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -109,6 +112,10 @@ export default function SettingsPage() {
       if (res.ok) {
         toast.success('Profile updated successfully!')
         setProfile(data)
+        // If phone was updated and not verified, show verification option
+        if (data.phone && !data.phoneVerified) {
+          setShowVerificationCode(false)
+        }
       } else {
         toast.error(data.error || 'Failed to update profile')
       }
@@ -116,6 +123,66 @@ export default function SettingsPage() {
       toast.error('Something went wrong')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleVerifyPhone = async () => {
+    if (!profileData.phone) {
+      toast.error('Please enter a phone number first')
+      return
+    }
+
+    setVerifyingPhone(true)
+    try {
+      const res = await fetch('/api/user/verify-phone', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: profileData.phone }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        toast.success('Verification code sent to your phone!')
+        setShowVerificationCode(true)
+      } else {
+        toast.error(data.error || 'Failed to send verification code')
+      }
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setVerifyingPhone(false)
+    }
+  }
+
+  const handleVerifyCode = async () => {
+    if (!verificationCode) {
+      toast.error('Please enter the verification code')
+      return
+    }
+
+    setVerifyingPhone(true)
+    try {
+      const res = await fetch('/api/user/verify-phone', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: verificationCode }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        toast.success('Phone number verified successfully!')
+        setShowVerificationCode(false)
+        setVerificationCode('')
+        fetchProfile() // Refresh profile to show verified status
+      } else {
+        toast.error(data.error || 'Invalid verification code')
+      }
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setVerifyingPhone(false)
     }
   }
 
@@ -282,11 +349,56 @@ export default function SettingsPage() {
                               Phone verified
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1.5 text-xs text-warning-700 bg-warning-100 px-2.5 py-1 rounded-lg">
-                              <AlertCircle className="h-3.5 w-3.5" />
-                              Phone not verified
-                            </span>
+                            <>
+                              <span className="inline-flex items-center gap-1.5 text-xs text-warning-700 bg-warning-100 px-2.5 py-1 rounded-lg">
+                                <AlertCircle className="h-3.5 w-3.5" />
+                                Phone not verified
+                              </span>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={handleVerifyPhone}
+                                loading={verifyingPhone}
+                                className="ml-2"
+                              >
+                                Verify Phone
+                              </Button>
+                            </>
                           )}
+                        </div>
+                      )}
+                      {showVerificationCode && (
+                        <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Enter verification code
+                          </label>
+                          <div className="flex gap-2">
+                            <Input
+                              type="text"
+                              value={verificationCode}
+                              onChange={(e) => setVerificationCode(e.target.value)}
+                              placeholder="123456"
+                              maxLength={6}
+                              className="flex-1"
+                            />
+                            <Button
+                              onClick={handleVerifyCode}
+                              loading={verifyingPhone}
+                              size="lg"
+                            >
+                              Verify
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                setShowVerificationCode(false)
+                                setVerificationCode('')
+                              }}
+                              variant="outline"
+                              size="lg"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
                         </div>
                       )}
                     </div>

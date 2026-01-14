@@ -178,12 +178,23 @@ export async function checkProductExpiration() {
     }
 
     if (shouldNotify) {
+      // Send email notification
       await createNotification(
         product.userId,
         'email',
         notificationTitle,
         notificationMessage
       )
+
+      // Send SMS notification for critical expirations (expired or expiring within 7 days)
+      if (daysUntilExpiry < 0 || daysUntilExpiry <= 7) {
+        await createNotification(
+          product.userId,
+          'sms',
+          notificationTitle,
+          notificationMessage
+        )
+      }
     }
   }
 }

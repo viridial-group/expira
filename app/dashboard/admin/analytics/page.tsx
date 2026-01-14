@@ -35,6 +35,11 @@ interface DailyVisit {
   count: number
 }
 
+interface CountryVisit {
+  country: string
+  count: number
+}
+
 export default function AnalyticsPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
@@ -48,6 +53,7 @@ export default function AnalyticsPage() {
   const [topPages, setTopPages] = useState<PageView[]>([])
   const [referrers, setReferrers] = useState<Referrer[]>([])
   const [visitsByDay, setVisitsByDay] = useState<DailyVisit[]>([])
+  const [visitsByCountry, setVisitsByCountry] = useState<CountryVisit[]>([])
   const [days, setDays] = useState(30)
   const [page, setPage] = useState(1)
 
@@ -62,6 +68,7 @@ export default function AnalyticsPage() {
         setTopPages(data.topPages || [])
         setReferrers(data.referrers || [])
         setVisitsByDay(data.visitsByDay || [])
+        setVisitsByCountry(data.visitsByCountry || [])
       } else if (res.status === 403) {
         toast.error('Admin access required')
         router.push('/dashboard')
@@ -226,6 +233,51 @@ export default function AnalyticsPage() {
           </div>
         </Card>
       </div>
+
+      {/* Visits by Country Chart */}
+      <Card className="shadow-xl border-0 mb-6">
+        <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-white via-gray-50/50 to-white">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Visits by Country</h2>
+          <p className="text-sm text-gray-600">Geographic distribution of visitors</p>
+        </div>
+        <div className="p-6">
+          {visitsByCountry.length === 0 ? (
+            <p className="text-gray-500 text-center py-8">No country data yet</p>
+          ) : (
+            <div className="space-y-4">
+              {visitsByCountry.map((item, index) => {
+                const maxCount = visitsByCountry[0]?.count || 1
+                const percentage = (item.count / maxCount) * 100
+                
+                return (
+                  <div key={item.country} className="space-y-2">
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-blue-600 rounded-lg flex items-center justify-center">
+                          <span className="text-xs font-bold text-white">{index + 1}</span>
+                        </div>
+                        <span className="font-semibold text-gray-900">{item.country}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-600">{item.count.toLocaleString()} visits</span>
+                        <Badge variant="primary" size="sm">
+                          {((item.count / stats.totalVisits) * 100).toFixed(1)}%
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-primary-500 to-blue-600 rounded-full transition-all duration-500 ease-out"
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </Card>
 
       {/* Recent Visitors */}
       <Card className="shadow-xl border-0">

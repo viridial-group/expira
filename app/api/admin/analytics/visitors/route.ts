@@ -125,6 +125,43 @@ export async function GET(request: NextRequest) {
       take: 10,
     })
 
+    // Get visits by country
+    const visitsByCountry = await prisma.visit.findMany({
+      where: {
+        createdAt: {
+          gte: startDate,
+        },
+        visitor: {
+          country: {
+            not: null,
+          },
+        },
+      },
+      include: {
+        visitor: {
+          select: {
+            country: true,
+          },
+        },
+      },
+      take: 10000, // Limit to avoid memory issues
+    })
+
+    // Process visits by country
+    const countryMap = new Map<string, number>()
+    visitsByCountry.forEach((visit) => {
+      const country = visit.visitor.country || 'Unknown'
+      countryMap.set(country, (countryMap.get(country) || 0) + 1)
+    })
+
+    const visitsByCountryArray = Array.from(countryMap.entries())
+      .map(([country, count]) => ({
+        country,
+        count,
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 15) // Top 15 countries
+
     // Process visits by day
     const visitsByDayMap = new Map<string, number>()
     visitsByDay.forEach((visit: { createdAt: Date }) => {
@@ -170,6 +207,7 @@ export async function GET(request: NextRequest) {
           count: r._count.id,
         })),
       visitsByDay: visitsByDayArray,
+      visitsByCountry: visitsByCountryArray,
       pagination: {
         page,
         limit,

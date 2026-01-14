@@ -15,13 +15,14 @@ export async function getUserByEmail(email: string) {
   })
 }
 
-export async function createUser(email: string, password: string, name?: string) {
+export async function createUser(email: string, password: string, name?: string, affiliateCode?: string | null) {
   const hashedPassword = await hashPassword(password)
   return prisma.user.create({
     data: {
       email,
       password: hashedPassword,
       name,
+      referredByAffiliateCode: affiliateCode || null,
     },
   })
 }

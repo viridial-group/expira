@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { createCommission } from '@/lib/affiliate'
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -133,6 +134,14 @@ export async function POST(request: NextRequest) {
             where: {
               stripeSubscriptionId: invoice.subscription as string,
             },
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  referredByAffiliateCode: true,
+                },
+              },
+            },
           })
 
           if (dbSubscription) {
@@ -142,7 +151,7 @@ export async function POST(request: NextRequest) {
             )
 
             // Create payment record
-            await prisma.payment.create({
+            const payment = await prisma.payment.create({
               data: {
                 userId: dbSubscription.userId,
                 subscriptionId: dbSubscription.id,
@@ -157,6 +166,43 @@ export async function POST(request: NextRequest) {
                 periodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
               },
             })
+
+            // Check if user was referred and create commission
+            if (dbSubscription.user.referredByAffiliateCode && invoice.amount_paid > 0) {
+              try {
+                // Find referral
+                const referral = await prisma.affiliateReferral.findFirst({
+                  where: {
+                    referredUserId: dbSubscription.userId,
+                    status: { in: ['pending', 'converted'] },
+                  },
+                })
+
+                if (referral) {
+                  // Determine commission type based on subscription count
+                  const existingCommissions = await prisma.affiliateCommission.count({
+                    where: {
+                      referralId: referral.id,
+                    },
+                  })
+
+                  const commissionType = existingCommissions === 0 
+                    ? 'subscription' // First subscription payment
+                    : 'recurring'    // Recurring payment
+
+                  // Create commission
+                  await createCommission(
+                    referral.id,
+                    payment.id,
+                    invoice.amount_paid,
+                    commissionType
+                  )
+                }
+              } catch (commissionError) {
+                // Log error but don't fail webhook processing
+                console.error('Error creating affiliate commission:', commissionError)
+              }
+            }
           }
         }
 

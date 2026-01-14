@@ -18,6 +18,7 @@ import {
   Users,
   Mail,
   BarChart3,
+  Gift,
 } from 'lucide-react'
 
 interface DashboardLayoutProps {
@@ -42,6 +43,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { name: 'Add Product', href: '/dashboard/products/new', icon: Plus },
     { name: 'Notifications', href: '/dashboard/notifications', icon: Bell },
     { name: 'Payment History', href: '/dashboard/payments', icon: CreditCard },
+    { name: 'Affiliate Program', href: '/dashboard/affiliate', icon: Gift },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },
     ...(isAdmin ? [
       { name: 'Contact Messages', href: '/dashboard/admin/contact', icon: MessageSquare },

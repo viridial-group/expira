@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Shield, Mail, Lock, User } from 'lucide-react'
+import { Shield, Mail, Lock, User, Gift } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Button, Card, Input } from '@/components/ui'
 
@@ -11,12 +11,14 @@ function RegisterForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect')
+  const affiliateCodeParam = searchParams.get('ref') // Get affiliate code from URL
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
+    affiliateCode: affiliateCodeParam || '',
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,6 +43,7 @@ function RegisterForm() {
           name: formData.name,
           email: formData.email,
           password: formData.password,
+          affiliateCode: formData.affiliateCode || undefined,
         }),
       })
 
@@ -132,6 +135,15 @@ function RegisterForm() {
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               icon={<Lock className="h-5 w-5" />}
               placeholder="••••••••"
+            />
+
+            <Input
+              label="Code de Parrainage (Optionnel)"
+              type="text"
+              value={formData.affiliateCode}
+              onChange={(e) => setFormData({ ...formData, affiliateCode: e.target.value.toUpperCase() })}
+              icon={<Gift className="h-5 w-5" />}
+              placeholder="CODE123"
             />
 
             <Button type="submit" loading={loading} className="w-full">

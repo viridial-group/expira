@@ -37,6 +37,7 @@ model User {
   affiliateReferrals       AffiliateReferral[]  @relation("AffiliateUser")
   affiliateCommissions     AffiliateCommission[]
   pushSubscriptions        PushSubscription[]
+  passwordResetTokens      PasswordResetToken[]
 
   @@map("users")
 }
@@ -349,4 +350,19 @@ model PushSubscription {
   @@map("push_subscriptions")
   @@index([userId])
   @@index([enabled])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("password_reset_tokens")
+  @@index([token])
+  @@index([userId])
+  @@index([expiresAt])
 }

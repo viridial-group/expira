@@ -94,10 +94,24 @@ export default function StructuredData({ type, data = {} }: StructuredDataProps)
     }
   }
 
+  const structuredData = getStructuredData()
+  
+  // Ensure we always return a valid object, not an array
+  const safeData = Array.isArray(structuredData) 
+    ? { '@type': 'Thing', ...structuredData } 
+    : structuredData
+
+  // Only render if we have valid data
+  if (!safeData || Object.keys(safeData).length === 0) {
+    return null
+  }
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(getStructuredData()) }}
+      dangerouslySetInnerHTML={{ 
+        __html: JSON.stringify(safeData, null, 0)
+      }}
     />
   )
 }

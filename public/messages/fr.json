@@ -85,6 +85,21 @@
     "subtitle": "Rejoignez des milliers d'entreprises qui font confiance à expira pour sécuriser leurs produits.",
     "button": "Démarrer Votre Essai Gratuit"
   },
+  "footer": {
+    "description": "Surveillez et protégez vos produits en ligne en toute confiance.",
+    "quickLinks": "Liens Rapides",
+    "support": "Support",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Restez informé de nos dernières fonctionnalités et astuces.",
+    "namePlaceholder": "Votre nom (optionnel)",
+    "emailPlaceholder": "Votre email",
+    "subscribing": "Abonnement en cours...",
+    "subscribe": "S'abonner",
+    "subscribed": "✓ Abonnement réussi !",
+    "allRightsReserved": "Tous droits réservés.",
+    "termsOfService": "Conditions d'Utilisation",
+    "privacyPolicy": "Politique de Confidentialité"
+  },
   "pricing": {
     "title": "Tarification Simple et Transparente",
     "subtitle": "Choisissez le plan qui correspond à vos besoins. Tous les plans incluent un essai gratuit de 14 jours sans carte bancaire.",

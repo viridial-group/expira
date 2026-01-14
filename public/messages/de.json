@@ -85,6 +85,21 @@
     "subtitle": "Schließen Sie sich Tausenden von Unternehmen an, die expira vertrauen, um ihre Produkte sicher zu halten.",
     "button": "Starten Sie Ihre Kostenlose Testversion"
   },
+  "footer": {
+    "description": "Überwachen und schützen Sie Ihre Online-Produkte mit Vertrauen.",
+    "quickLinks": "Schnelllinks",
+    "support": "Support",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Bleiben Sie auf dem Laufenden mit unseren neuesten Funktionen und Tipps.",
+    "namePlaceholder": "Ihr Name (optional)",
+    "emailPlaceholder": "Ihre E-Mail",
+    "subscribing": "Abonnieren...",
+    "subscribe": "Abonnieren",
+    "subscribed": "✓ Erfolgreich abonniert!",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "termsOfService": "Nutzungsbedingungen",
+    "privacyPolicy": "Datenschutzrichtlinie"
+  },
   "pricing": {
     "title": "Einfache, Transparente Preise",
     "subtitle": "Wähle den Plan, der zu deinen Bedürfnissen passt. Alle Pläne beinhalten eine 14-tägige kostenlose Testversion ohne Kreditkarte.",

@@ -85,6 +85,21 @@
     "subtitle": "Join thousands of businesses that trust expira to keep their products secure.",
     "button": "Start Your Free Trial"
   },
+  "footer": {
+    "description": "Monitor and protect your online products with confidence.",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Stay updated with our latest features and tips.",
+    "namePlaceholder": "Your name (optional)",
+    "emailPlaceholder": "Your email",
+    "subscribing": "Subscribing...",
+    "subscribe": "Subscribe",
+    "subscribed": "✓ Successfully subscribed!",
+    "allRightsReserved": "All rights reserved.",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy"
+  },
   "pricing": {
     "title": "Simple, Transparent Pricing",
     "subtitle": "Choose the plan that fits your needs. All plans include a 14-day free trial with no credit card required.",

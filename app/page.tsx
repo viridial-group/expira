@@ -737,35 +737,35 @@ export default function Home() {
                 <span className="ml-2 text-white font-bold text-lg">expira</span>
               </div>
               <p className="text-sm leading-relaxed">
-                Monitor and protect your online products with confidence.
+                {t('footer.description')}
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">{t('footer.quickLinks')}</h3>
               <ul className="space-y-2">
-                <li><Link href="#features" className="hover:text-white transition">Features</Link></li>
-                <li><Link href="#pricing" className="hover:text-white transition">Pricing</Link></li>
-                <li><Link href="/affiliate" className="hover:text-white transition">Affiliate Program</Link></li>
-                <li><Link href="/login" className="hover:text-white transition">Login</Link></li>
-                <li><Link href="/register" className="hover:text-white transition">Register</Link></li>
+                <li><Link href="#features" className="hover:text-white transition">{t('common.features')}</Link></li>
+                <li><Link href="#pricing" className="hover:text-white transition">{t('common.pricing')}</Link></li>
+                <li><Link href="/affiliate" className="hover:text-white transition">{t('common.affiliate', { defaultValue: 'Affiliate Program' })}</Link></li>
+                <li><Link href="/login" className="hover:text-white transition">{t('common.login')}</Link></li>
+                <li><Link href="/register" className="hover:text-white transition">{t('common.register')}</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Support</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">{t('footer.support')}</h3>
               <ul className="space-y-2">
                 <li><Link href="/faq" className="hover:text-white transition">FAQ</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition">Contact Us</Link></li>
-                <li><Link href="/terms" className="hover:text-white transition">Terms of Service</Link></li>
-                <li><Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition">{t('common.contact')}</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition">{t('footer.termsOfService', { defaultValue: 'Terms of Service' })}</Link></li>
+                <li><Link href="/privacy" className="hover:text-white transition">{t('footer.privacyPolicy', { defaultValue: 'Privacy Policy' })}</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Newsletter</h3>
-              <p className="text-sm mb-4">Stay updated with our latest features and tips.</p>
+              <h3 className="text-lg font-semibold text-white mb-4">{t('footer.newsletter')}</h3>
+              <p className="text-sm mb-4">{t('footer.newsletterDescription')}</p>
               <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                 <input
                   type="text"
-                  placeholder="Your name (optional)"
+                  placeholder={t('footer.namePlaceholder') as string}
                   value={newsletterName}
                   onChange={(e) => setNewsletterName(e.target.value)}
                   className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -773,7 +773,7 @@ export default function Home() {
                 <input
                   type="email"
                   required
-                  placeholder="Your email"
+                  placeholder={t('footer.emailPlaceholder') as string}
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -786,23 +786,23 @@ export default function Home() {
                   {newsletterLoading ? (
                     <>
                       <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                      Subscribing...
+                      {t('footer.subscribing')}
                     </>
                   ) : (
                     <>
                       <Mail className="h-4 w-4" />
-                      Subscribe
+                      {t('footer.subscribe')}
                     </>
                   )}
                 </button>
                 {newsletterSuccess && (
-                  <p className="text-sm text-green-400">✓ Successfully subscribed!</p>
+                  <p className="text-sm text-green-400">{t('footer.subscribed')}</p>
                 )}
               </form>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>&copy; {new Date().getFullYear()} expira. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} expira. {t('footer.allRightsReserved')}</p>
           </div>
         </div>
       </footer>

@@ -85,6 +85,21 @@
     "subtitle": "Únase a miles de empresas que confían en expira para mantener sus productos seguros.",
     "button": "Inicie Su Prueba Gratuita"
   },
+  "footer": {
+    "description": "Monitoree y proteja sus productos en línea con confianza.",
+    "quickLinks": "Enlaces Rápidos",
+    "support": "Soporte",
+    "newsletter": "Boletín",
+    "newsletterDescription": "Manténgase actualizado con nuestras últimas características y consejos.",
+    "namePlaceholder": "Su nombre (opcional)",
+    "emailPlaceholder": "Su correo electrónico",
+    "subscribing": "Suscribiendo...",
+    "subscribe": "Suscribirse",
+    "subscribed": "✓ ¡Suscripción exitosa!",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "termsOfService": "Términos de Servicio",
+    "privacyPolicy": "Política de Privacidad"
+  },
   "pricing": {
     "title": "Precios Simples y Transparentes",
     "subtitle": "Elige el plan que se adapte a tus necesidades. Todos los planes incluyen una prueba gratuita de 14 días sin tarjeta de crédito.",

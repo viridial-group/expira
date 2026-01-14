@@ -15,6 +15,11 @@ export default function VisitorTracker() {
   const trackingKeyRef = useRef<string>(`${pathname}-${Date.now()}`)
 
   useEffect(() => {
+    // Don't track admin routes
+    if (pathname?.startsWith('/dashboard/admin') || pathname?.startsWith('/api/admin')) {
+      return
+    }
+
     // Generate unique key for this page visit
     const currentKey = `${pathname}-${Date.now()}`
     trackingKeyRef.current = currentKey

@@ -27,6 +27,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Don't track admin routes
+    if (path.startsWith('/dashboard/admin') || path.startsWith('/api/admin')) {
+      return NextResponse.json({ success: true, skipped: true })
+    }
+
     // Get or create session ID
     const sessionId = await getSessionId(request)
     

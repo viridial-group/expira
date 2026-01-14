@@ -22,11 +22,13 @@ self.addEventListener('activate', (event) => {
 
 // Push event - handle incoming push notifications
 self.addEventListener('push', (event) => {
+  console.log('Push event received:', event)
+  
   let notificationData = {
     title: 'expira',
     body: 'You have a new notification',
-    icon: '/icon-192x192.png',
-    badge: '/icon-192x192.png',
+    icon: '/favicon.ico', // Fallback to favicon if icon doesn't exist
+    badge: '/favicon.ico',
     tag: 'expira-notification',
     requireInteraction: false,
     data: {},
@@ -35,6 +37,7 @@ self.addEventListener('push', (event) => {
   if (event.data) {
     try {
       const data = event.data.json()
+      console.log('Push data parsed:', data)
       notificationData = {
         ...notificationData,
         title: data.title || notificationData.title,
@@ -46,20 +49,38 @@ self.addEventListener('push', (event) => {
         data: data.data || {},
       }
     } catch (e) {
-      notificationData.body = event.data.text()
+      console.error('Error parsing push data:', e)
+      // Try to get text data
+      if (event.data.text) {
+        notificationData.body = event.data.text()
+      }
     }
+  } else {
+    console.warn('Push event received without data')
   }
 
+  const notificationOptions = {
+    body: notificationData.body,
+    icon: notificationData.icon,
+    badge: notificationData.badge,
+    tag: notificationData.tag,
+    requireInteraction: notificationData.requireInteraction,
+    data: notificationData.data,
+    actions: notificationData.data.actions || [],
+    vibrate: [200, 100, 200], // Vibration pattern
+    timestamp: Date.now(),
+  }
+
+  console.log('Showing notification:', notificationData.title, notificationOptions)
+
   event.waitUntil(
-    self.registration.showNotification(notificationData.title, {
-      body: notificationData.body,
-      icon: notificationData.icon,
-      badge: notificationData.badge,
-      tag: notificationData.tag,
-      requireInteraction: notificationData.requireInteraction,
-      data: notificationData.data,
-      actions: notificationData.data.actions || [],
-    })
+    self.registration.showNotification(notificationData.title, notificationOptions)
+      .then(() => {
+        console.log('Notification displayed successfully')
+      })
+      .catch((error) => {
+        console.error('Error showing notification:', error)
+      })
   )
 })
 

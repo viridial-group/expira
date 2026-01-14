@@ -62,8 +62,8 @@ export async function sendPushNotification(
     title: payload.title,
     message: payload.message,
     body: payload.message,
-    icon: payload.icon || '/icon-192x192.png',
-    badge: payload.badge || '/icon-192x192.png',
+    icon: payload.icon || '/favicon.ico', // Use favicon as fallback
+    badge: payload.badge || '/favicon.ico',
     tag: payload.tag || 'expira-notification',
     requireInteraction: payload.requireInteraction || false,
     data: {
@@ -72,6 +72,8 @@ export async function sendPushNotification(
     },
   })
 
+  console.log(`Sending push notification to ${subscriptions.length} subscription(s) for user ${userId}`)
+
   let sent = 0
   let failed = 0
   const failedSubscriptions: string[] = []
@@ -79,6 +81,8 @@ export async function sendPushNotification(
   // Send to all subscriptions
   for (const subscription of subscriptions) {
     try {
+      console.log(`Sending to subscription ${subscription.id}, endpoint: ${subscription.endpoint.substring(0, 50)}...`)
+      
       await webpush.sendNotification(
         {
           endpoint: subscription.endpoint,
@@ -89,14 +93,21 @@ export async function sendPushNotification(
         },
         notificationPayload
       )
+      console.log(`✅ Push notification sent successfully to subscription ${subscription.id}`)
       sent++
     } catch (error: any) {
-      console.error('Error sending push notification:', error)
+      console.error(`❌ Error sending push notification to subscription ${subscription.id}:`, error)
+      console.error('Error details:', {
+        statusCode: error.statusCode,
+        message: error.message,
+        body: error.body,
+      })
       failed++
       failedSubscriptions.push(subscription.id)
 
       // If subscription is invalid (410 Gone), disable it
       if (error.statusCode === 410) {
+        console.log(`Disabling invalid subscription ${subscription.id} (410 Gone)`)
         await prisma.pushSubscription.update({
           where: { id: subscription.id },
           data: { enabled: false },

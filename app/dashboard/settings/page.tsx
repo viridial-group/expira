@@ -444,8 +444,27 @@ export default function SettingsPage() {
                       <h3 className="font-semibold text-gray-900 mb-1">Push Notifications</h3>
                       <p className="text-sm text-gray-600">Receive browser push notifications for important updates</p>
                     </div>
-                    <div className="ml-4">
+                    <div className="ml-4 flex items-center gap-2">
                       <PushNotificationManager />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={async () => {
+                          try {
+                            const response = await fetch('/api/push/test')
+                            const data = await response.json()
+                            if (data.success) {
+                              toast.success(data.message || 'Notification de test envoyée !')
+                            } else {
+                              toast.error(data.message || 'Échec de l\'envoi de la notification')
+                            }
+                          } catch (error) {
+                            toast.error('Erreur lors de l\'envoi de la notification de test')
+                          }
+                        }}
+                      >
+                        Test
+                      </Button>
                     </div>
                   </div>
                 </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, ArrowRight, AlertTriangle, Clock, Heart, Sparkles, Star, Users, Award, CreditCard, Code, X, Menu, Gift, Mail } from 'lucide-react'
+import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, ArrowRight, AlertTriangle, Clock, Heart, Sparkles, Star, Users, Award, CreditCard, Code, X, Menu, Gift, Mail, MessageSquare } from 'lucide-react'
 import StructuredData from './components/StructuredData'
 
 // Metadata is handled in layout.tsx
@@ -519,20 +519,268 @@ export default function Home() {
 
       {/* Pricing Section */}
       <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-            Simple, Transparent Pricing
-          </h2>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-12">
-            Choose the plan that fits your needs. All plans include a 14-day free trial with no credit card required.
-          </p>
-          <Link
-            href="/pricing"
-            className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg text-lg font-semibold hover:bg-primary-700 transition shadow-lg"
-          >
-            View All Plans
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-6 py-2 bg-gradient-to-r from-primary-100 to-blue-100 text-primary-700 rounded-full text-sm font-semibold mb-6 shadow-sm">
+              <Sparkles className="h-4 w-4 mr-2" />
+              14-day free trial • No credit card required
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
+              Choose the plan that fits your needs. All plans include a 14-day free trial with no credit card required.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Starter Plan */}
+            <div className="bg-white rounded-2xl shadow-xl border-0 p-8 relative transform transition-all hover:scale-105 hover:shadow-2xl">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+                <p className="text-gray-600">Perfect for individuals and small projects</p>
+              </div>
+              <div className="mb-6">
+                <div className="flex items-baseline">
+                  <span className="text-5xl font-extrabold text-gray-900">$9</span>
+                  <span className="text-gray-600 ml-2">/month</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Up to 10 products</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Daily checks</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Email notifications</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Basic analytics</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Email support</span>
+                </li>
+              </ul>
+              <Link href="/pricing/review?plan=starter">
+                <button className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all shadow-lg">
+                  Start Free Trial
+                  <ArrowRight className="inline-block ml-2 h-4 w-4" />
+                </button>
+              </Link>
+            </div>
+
+            {/* Professional Plan - Most Popular */}
+            <div className="bg-white rounded-2xl shadow-xl border-0 p-8 relative transform transition-all hover:scale-105 hover:shadow-2xl ring-2 ring-primary-500 scale-105 lg:scale-110">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <div className="bg-gradient-to-r from-primary-600 to-blue-600 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-lg">
+                  Most Popular
+                </div>
+              </div>
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+                <p className="text-gray-600">Ideal for growing businesses</p>
+              </div>
+              <div className="mb-6">
+                <div className="flex items-baseline">
+                  <span className="text-5xl font-extrabold text-gray-900">$29</span>
+                  <span className="text-gray-600 ml-2">/month</span>
+                </div>
+                <p className="text-sm text-gray-500 mt-2 flex items-center">
+                  <TrendingUp className="h-4 w-4 mr-1 text-green-600" />
+                  Best value for growing teams
+                </p>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Up to 100 products</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Hourly checks</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-blue-600">
+                      <MessageSquare className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-primary-700 font-semibold">Email + SMS notifications</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-blue-600">
+                      <MessageSquare className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-primary-700 font-semibold">Up to 500 SMS/month</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Advanced analytics</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Priority support</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">API access</span>
+                </li>
+              </ul>
+              <div className="mb-6 p-4 bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-200 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="h-5 w-5 text-primary-600" />
+                  <p className="text-sm text-primary-700 font-medium">500 SMS included per month</p>
+                </div>
+              </div>
+              <Link href="/pricing/review?plan=professional">
+                <button className="w-full bg-gradient-to-r from-primary-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-primary-700 hover:to-blue-700 transition-all shadow-lg">
+                  Start Free Trial
+                  <ArrowRight className="inline-block ml-2 h-4 w-4" />
+                </button>
+              </Link>
+            </div>
+
+            {/* Enterprise Plan */}
+            <div className="bg-white rounded-2xl shadow-xl border-0 p-8 relative transform transition-all hover:scale-105 hover:shadow-2xl">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                <p className="text-gray-600">For large organizations</p>
+              </div>
+              <div className="mb-6">
+                <div className="flex items-baseline">
+                  <span className="text-5xl font-extrabold text-gray-900">$99</span>
+                  <span className="text-gray-600 ml-2">/month</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Unlimited products</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Real-time monitoring</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">All notification types</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-blue-600">
+                      <MessageSquare className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-primary-700 font-semibold">Unlimited SMS</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Custom reports</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Dedicated support</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">Custom integrations</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-full flex items-center justify-center bg-gradient-to-br from-success-500 to-emerald-600">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                  </div>
+                  <span className="ml-3 text-gray-700">SLA guarantee</span>
+                </li>
+              </ul>
+              <div className="mb-6 p-4 bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-200 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="h-5 w-5 text-primary-600" />
+                  <p className="text-sm text-primary-700 font-medium">Unlimited SMS included</p>
+                </div>
+              </div>
+              <Link href="/contact">
+                <button className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all shadow-lg">
+                  Contact Sales
+                  <ArrowRight className="inline-block ml-2 h-4 w-4" />
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

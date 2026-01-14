@@ -314,3 +314,21 @@ model AffiliateCommission {
   @@index([status])
   @@index([createdAt])
 }
+
+model NewsletterSubscriber {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  source      String?  // "landing_page", "contact_form", "manual", etc.
+  status      String   @default("active") // "active", "unsubscribed", "bounced"
+  subscribedAt DateTime @default(now())
+  unsubscribedAt DateTime?
+  metadata    Json?    // Additional data (IP, user agent, etc.)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("newsletter_subscribers")
+  @@index([email])
+  @@index([status])
+  @@index([subscribedAt])
+}

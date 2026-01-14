@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, ArrowRight, AlertTriangle, Clock, Heart, Sparkles, Star, Users, Award, CreditCard, Code, X, Menu, Gift } from 'lucide-react'
+import { Check, Shield, Zap, Bell, Globe, Lock, TrendingUp, ArrowRight, AlertTriangle, Clock, Heart, Sparkles, Star, Users, Award, CreditCard, Code, X, Menu, Gift, Mail } from 'lucide-react'
 import StructuredData from './components/StructuredData'
 
 // Metadata is handled in layout.tsx
@@ -11,6 +11,10 @@ import StructuredData from './components/StructuredData'
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [newsletterName, setNewsletterName] = useState('')
+  const [newsletterLoading, setNewsletterLoading] = useState(false)
+  const [newsletterSuccess, setNewsletterSuccess] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +32,43 @@ export default function Home() {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' })
         setMobileMenuOpen(false)
       }
+    }
+  }
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setNewsletterLoading(true)
+    setNewsletterSuccess(false)
+
+    try {
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: newsletterEmail,
+          name: newsletterName,
+          source: 'landing_page',
+          metadata: {
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+          },
+        }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        setNewsletterSuccess(true)
+        setNewsletterEmail('')
+        setNewsletterName('')
+        setTimeout(() => setNewsletterSuccess(false), 5000)
+      } else {
+        alert(data.error || 'Failed to subscribe')
+      }
+    } catch (error) {
+      alert('Something went wrong. Please try again.')
+    } finally {
+      setNewsletterLoading(false)
     }
   }
 
@@ -547,10 +588,45 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
-              <p className="text-sm">123 Main St, Anytown USA</p>
-              <p className="text-sm">info@expira.io</p>
-              <p className="text-sm">+1 (555) 123-4567</p>
+              <h3 className="text-lg font-semibold text-white mb-4">Newsletter</h3>
+              <p className="text-sm mb-4">Stay updated with our latest features and tips.</p>
+              <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Your name (optional)"
+                  value={newsletterName}
+                  onChange={(e) => setNewsletterName(e.target.value)}
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="Your email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+                <button
+                  type="submit"
+                  disabled={newsletterLoading}
+                  className="w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {newsletterLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                      Subscribing...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="h-4 w-4" />
+                      Subscribe
+                    </>
+                  )}
+                </button>
+                {newsletterSuccess && (
+                  <p className="text-sm text-green-400">✓ Successfully subscribed!</p>
+                )}
+              </form>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
